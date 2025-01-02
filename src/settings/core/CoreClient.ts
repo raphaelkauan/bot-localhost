@@ -75,7 +75,6 @@ export class CoreClient extends Client {
             files.map(async (file) => {
               try {
                 const command: CommandType = (await import(`../../commands/${category}/${file}`))?.default;
-                console.log("teste1");
                 if (command.name) {
                   this.commands.set(command.name, command);
                   slashCommands.push(command);
@@ -111,10 +110,11 @@ export class CoreClient extends Client {
           await Promise.all(
             files.map(async (file) => {
               try {
-                const event: EventType<keyof ClientEvents> = await import(`../../events/${category}/${file}`);
+                const { name, once, run }: EventType<keyof ClientEvents> = (
+                  await import(`../../events/${category}/${file}`)
+                )?.default;
 
-                if (event.name)
-                  event.once ? this.once(event.name, event.run) : this.on(event.name, event.run);
+                if (name) once ? this.once(name, run) : this.on(name, run);
               } catch (error) {
                 console.error(`failed to load event from file: ${file} \n${error}`);
               }

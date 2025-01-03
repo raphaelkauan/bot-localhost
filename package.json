@@ -16,6 +16,8 @@
     "typescript": "^5.7.2"
   },
   "dependencies": {
+    "@discordjs/voice": "^0.18.0",
+    "@distube/ytdl-core": "^4.15.7",
     "discord.js": "^14.16.3",
     "dotenv": "^16.4.5",
     "ts-lib": "^0.0.5"

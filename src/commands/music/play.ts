@@ -67,7 +67,7 @@ export default new Command({
         await interaction.reply({ content: `🎶 ${url}` });
         return;
       }
-      await interaction.reply({ content: `🎶 Adicionado à fila: ${url}` });
+      await interaction.reply({ content: `🦘 Agora sua música está na fila: ${url}` });
     } catch (error) {
       console.log(`Erro ao executar comando de comando de / \n${error}`);
     }

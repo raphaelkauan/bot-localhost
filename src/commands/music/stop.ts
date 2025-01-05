@@ -8,6 +8,17 @@ export default new Command({
   description: "Parar de tocar música(s). Atenção, este comando limpará toda a fila de músicas.",
 
   async run({ interaction }) {
+    const channelId = process.env.CHANNEL_MUSIC_ID;
+
+    if (interaction.channelId != channelId) {
+      await interaction.reply({
+        ephemeral: true,
+        content:
+          "Você está tentando enviar este comando no canal errado. Por favor, utilize o canal para pedidos de música.",
+      });
+      return;
+    }
+
     if (musicState.connection) {
       musicState.connection.destroy();
       musicState.connection = null;

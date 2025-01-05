@@ -2,6 +2,10 @@ import { ApplicationCommandType, EmbedBuilder } from "discord.js";
 import { Command } from "../../settings/types/Command";
 import { musicState } from "../../utils/functions/play-music";
 import ytdl from "@distube/ytdl-core";
+import dotenv from "dotenv";
+import { validationChannel } from "../../utils/functions/validation-channel";
+
+dotenv.config();
 
 export default new Command({
   name: "fila",
@@ -9,6 +13,17 @@ export default new Command({
   description: "Exibe as músicas que estão na fila.",
 
   async run({ interaction }) {
+    const channelId = process.env.CHANNEL_MUSIC_ID;
+
+    if (interaction.channelId != channelId) {
+      await interaction.reply({
+        ephemeral: true,
+        content:
+          "Você está tentando executar este comando no canal errado. Por favor, utilize o canal para pedidos de música.",
+      });
+      return;
+    }
+
     if (!musicState.queue.length) {
       await interaction.reply({
         ephemeral: true,

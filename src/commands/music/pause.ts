@@ -27,10 +27,12 @@ export default new Command({
       return;
     }
 
-    if (musicState.player.pause()) {
+    const pause = musicState.player.pause();
+
+    if (pause) {
       await interaction.reply({ content: "⏸️ A música foi pausada!" });
-    } else {
-      await interaction.reply({ ephemeral: true, content: "Houve um erro ao tentar pausar a música." });
+      return;
     }
+    await interaction.reply({ ephemeral: true, content: "Houve um erro ao tentar pausar a música." });
   },
 });

@@ -69,6 +69,7 @@ export default new Command({
       }
       await interaction.reply({ content: `🦘 Agora sua música está na fila: ${url}` });
     } catch (error) {
+      await interaction.reply({ ephemeral: true, content: "Não foi possível execitar /play!" });
       console.log(`Erro ao executar comando de comando de / \n${error}`);
     }
   },

@@ -1,6 +1,7 @@
 import { ApplicationCommandType } from "discord.js";
 import { Command } from "../../settings/types/Command";
 import { musicState, playMusic } from "../../utils/functions/play-music";
+import { validationChannel } from "../../utils/functions/validation-channel";
 
 export default new Command({
   name: "skip",
@@ -8,16 +9,7 @@ export default new Command({
   description: "Pular para a próxima música na fila.",
 
   async run({ interaction }) {
-    const channelId = process.env.CHANNEL_MUSIC_ID;
-
-    if (interaction.channelId != channelId) {
-      await interaction.reply({
-        ephemeral: true,
-        content:
-          "Você está tentando executar este comando no canal errado. Por favor, utilize o canal para pedidos de música.",
-      });
-      return;
-    }
+    if (!(await validationChannel(interaction))) return;
 
     if (!musicState.connection) {
       interaction.reply({ ephemeral: true, content: `Não existe música tocando!` });

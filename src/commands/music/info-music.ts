@@ -1,5 +1,6 @@
 import { ApplicationCommandType, Embed, EmbedBuilder } from "discord.js";
 import { Command } from "../../settings/types/Command";
+import { validationChannel } from "../../utils/functions/validation-channel";
 
 export default new Command({
   name: "info-music",
@@ -7,16 +8,7 @@ export default new Command({
   description: "Informações relacionadas à reprodução de música.",
 
   async run({ interaction }) {
-    const channelId = process.env.CHANNEL_MUSIC_ID;
-
-    if (interaction.channelId != channelId) {
-      await interaction.reply({
-        ephemeral: true,
-        content:
-          "Você está tentando executar este comando no canal errado. Por favor, utilize o canal para pedidos de música.",
-      });
-      return;
-    }
+    if (!(await validationChannel(interaction))) return;
 
     const embed = new EmbedBuilder()
       .setColor("#FAA61A")

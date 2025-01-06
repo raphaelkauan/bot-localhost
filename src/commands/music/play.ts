@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import ytdl from "@distube/ytdl-core";
 import { AudioPlayerStatus, joinVoiceChannel } from "@discordjs/voice";
 import { playMusic, musicState } from "../../utils/functions/play-music";
+import { validationChannel } from "../../utils/functions/validation-channel";
 
 dotenv.config();
 
@@ -32,15 +33,7 @@ export default new Command({
       return;
     }
 
-    const channelId = process.env.CHANNEL_MUSIC_ID;
-
-    if (interaction.channelId != channelId) {
-      await interaction.reply({
-        ephemeral: true,
-        content: "Você não está pedindo música no canal correto!",
-      });
-      return;
-    }
+    if (!(await validationChannel(interaction))) return;
 
     const url = interaction.options.get("link", true).value;
 

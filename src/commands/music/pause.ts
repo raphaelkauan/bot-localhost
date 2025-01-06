@@ -2,6 +2,7 @@ import { ApplicationCommandType } from "discord.js";
 import { Command } from "../../settings/types/Command";
 import dotenv from "dotenv";
 import { musicState } from "../../utils/functions/play-music";
+import { validationChannel } from "../../utils/functions/validation-channel";
 
 dotenv.config();
 
@@ -11,16 +12,7 @@ export default new Command({
   description: "Pausa música que está tocando no momento.",
 
   async run({ interaction }) {
-    const channelId = process.env.CHANNEL_MUSIC_ID;
-
-    if (interaction.channelId != channelId) {
-      await interaction.reply({
-        ephemeral: true,
-        content:
-          "Você está tentando executar este comando no canal errado. Por favor, utilize o canal para pedidos de música.",
-      });
-      return;
-    }
+    if (!(await validationChannel(interaction))) return;
 
     if (!musicState.player) {
       await interaction.reply({ ephemeral: true, content: "Não há nenhuma música tocando no momento!" });

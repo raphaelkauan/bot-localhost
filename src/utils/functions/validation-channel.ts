@@ -1,5 +1,6 @@
 import { CommandInteraction } from "discord.js";
 import dotenv from "dotenv";
+
 dotenv.config();
 
 export async function validationChannel(interaction: CommandInteraction) {
@@ -11,6 +12,8 @@ export async function validationChannel(interaction: CommandInteraction) {
       content:
         "Você está tentando executar este comando no canal errado. Por favor, utilize o canal para pedidos de música.",
     });
-    return;
+    return false;
   }
+
+  return true;
 }

@@ -13,16 +13,7 @@ export default new Command({
   description: "Exibe as músicas que estão na fila.",
 
   async run({ interaction }) {
-    const channelId = process.env.CHANNEL_MUSIC_ID;
-
-    if (interaction.channelId != channelId) {
-      await interaction.reply({
-        ephemeral: true,
-        content:
-          "Você está tentando executar este comando no canal errado. Por favor, utilize o canal para pedidos de música.",
-      });
-      return;
-    }
+    if (!(await validationChannel(interaction))) return;
 
     if (!musicState.queue.length) {
       await interaction.reply({

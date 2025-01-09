@@ -1,12 +1,15 @@
 import { EmbedBuilder, TextChannel } from "discord.js";
 import { Event } from "../../settings/types/Event";
 import dotenv from "dotenv";
+import { client } from "../..";
 
 dotenv.config();
 
 export default new Event({
   name: "guildMemberAdd",
-  run(interaction) {
+  async run(interaction) {
+    const emojiCelular = client.emojis.cache.get("1326739542211956826");
+
     const channelWelcomeId = process.env.CHANNEL_WELCOME_ID;
 
     // @ts-ignore
@@ -18,17 +21,32 @@ export default new Event({
     }
 
     const embed = new EmbedBuilder()
-      .setColor("DarkAqua")
-      .setTitle(`Welcome ${interaction.displayName}!`)
-      .setDescription(`teste <#${channelWelcomeId}>`)
+      .setColor("#1e1f22")
+      .setTitle(`Salve, ${interaction.displayName}! <:celular:${emojiCelular}>`)
+      .setDescription(
+        `Você acaba de entrar no servidor **localhost**. 
+        Aqui você poderá interagir com a comunidade, encontrar vagas, conversar sobre programação, tecnologia e muito mais!`
+      )
       .setThumbnail(interaction.user.displayAvatarURL())
-      .addFields({ name: "Canais", value: "Confira os canais disponíveis e participe das conversas!" })
+      .addFields(
+        {
+          name: "📜 Regras",
+          value:
+            "Não deixe de conferir o canal de <#1326738060666470535> para saber como aproveitar ao máximo o servidor!",
+        },
+        {
+          name: "📚 Conteúdo",
+          value: "Confira o canal de <#1326738060666470535> para dicas, tutoriais e materiais úteis!",
+        },
+        {
+          name: "💬 Canais",
+          value: "Participe das conversas nos diversos canais disponíveis e se conecte com a galera!",
+        }
+      )
       .setFooter({
         text: "Aproveite o servidor!",
-        iconURL: interaction.user.displayAvatarURL(),
-      })
-      .setTimestamp();
+      });
 
-    channel.send({ embeds: [embed] });
+    await channel.send({ embeds: [embed] });
   },
 });

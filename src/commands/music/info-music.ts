@@ -1,6 +1,6 @@
 import { ApplicationCommandType, Embed, EmbedBuilder } from "discord.js";
 import { Command } from "../../settings/types/Command";
-import { validationChannel } from "../../utils/functions/validation-channel";
+import { validationChannel } from "../../utils/functions/validationChannel";
 
 export default new Command({
   name: "info-music",

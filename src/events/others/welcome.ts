@@ -21,7 +21,7 @@ export default new Event({
     }
 
     const embed = new EmbedBuilder()
-      .setColor("#1e1f22")
+      .setColor("#ff0000")
       .setTitle(`Salve, ${interaction.displayName}! <:celular:${emojiCelular}>`)
       .setDescription(
         `Você acaba de entrar no servidor **localhost**. 
@@ -47,6 +47,6 @@ export default new Event({
         text: "Aproveite o servidor!",
       });
 
-    await channel.send({ embeds: [embed] });
+    await channel.send({ content: `<@${interaction.user.id}>`, embeds: [embed] });
   },
 });

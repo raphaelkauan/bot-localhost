@@ -1,7 +1,7 @@
 import { ApplicationCommandType } from "discord.js";
 import { Command } from "../../settings/types/Command";
-import { musicState } from "../../utils/functions/play-music";
-import { validationChannel } from "../../utils/functions/validation-channel";
+import { musicState } from "../../utils/functions/playMusic";
+import { validationChannel } from "../../utils/functions/validationChannel";
 
 export default new Command({
   name: "stop",

@@ -3,8 +3,10 @@ import { Command } from "../../settings/types/Command";
 import dotenv from "dotenv";
 import ytdl from "@distube/ytdl-core";
 import { AudioPlayerStatus, joinVoiceChannel } from "@discordjs/voice";
-import { playMusic, musicState } from "../../utils/functions/play-music";
-import { validationChannel } from "../../utils/functions/validation-channel";
+import { playMusic, musicState } from "../../utils/functions/playMusic";
+import { validationChannel } from "../../utils/functions/validationChannel";
+import { createEmbedInformation } from "../../utils/functions/createEmbedInformation";
+import { colors } from "../../utils/colors/colors.json";
 
 dotenv.config();
 
@@ -28,7 +30,13 @@ export default new Command({
     if (!voiceChannelId) {
       await interaction.reply({
         ephemeral: true,
-        content: "Você precisa estar em um canal de voz para usar este comando!",
+        embeds: [
+          createEmbedInformation(
+            colors.yellow,
+            "Informação",
+            "Você precisa estar em um canal de voz para usar este comando!"
+          ),
+        ],
       });
       return;
     }
@@ -39,7 +47,12 @@ export default new Command({
 
     // @ts-ignore
     if (!ytdl.validateURL(url)) {
-      await interaction.reply({ ephemeral: true, content: "Por favor, insira um link válido do YouTube" });
+      await interaction.reply({
+        ephemeral: true,
+        embeds: [
+          createEmbedInformation(colors.yellow, "Informação", "Por favor, insira um link válido do YouTube"),
+        ],
+      });
       return;
     }
 
@@ -60,9 +73,14 @@ export default new Command({
         await interaction.reply({ content: `🎶 ${url}` });
         return;
       }
-      await interaction.reply({ content: `🦘 Agora sua música está na fila: ${url}` });
+      await interaction.reply({
+        embeds: [createEmbedInformation(colors.yellow, "Informação", `🦘 Agora sua música está na fila!`)],
+      });
     } catch (error) {
-      await interaction.reply({ ephemeral: true, content: "Não foi possível execitar /play!" });
+      await interaction.reply({
+        ephemeral: true,
+        embeds: [createEmbedInformation(colors.red, "Aviso", `Não foi possível executar o comando!`)],
+      });
       console.log(`Erro ao executar comando de comando de / \n${error}`);
     }
   },

@@ -1,9 +1,9 @@
 import { ApplicationCommandType, EmbedBuilder } from "discord.js";
 import { Command } from "../../settings/types/Command";
-import { musicState } from "../../utils/functions/play-music";
+import { musicState } from "../../utils/functions/playMusic";
 import ytdl from "@distube/ytdl-core";
 import dotenv from "dotenv";
-import { validationChannel } from "../../utils/functions/validation-channel";
+import { validationChannel } from "../../utils/functions/validationChannel";
 
 dotenv.config();
 

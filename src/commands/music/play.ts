@@ -70,7 +70,15 @@ export default new Command({
 
         playMusic();
 
-        await interaction.reply({ content: `🎶 ${url}` });
+        await interaction.reply({
+          embeds: [
+            createEmbedInformation(
+              colors.blueMusic,
+              "Informação",
+              `*${interaction.user.displayName}* música tocando! 🎶`
+            ),
+          ],
+        });
         return;
       }
       await interaction.reply({

@@ -3,6 +3,8 @@ import { Command } from "../../settings/types/Command";
 import dotenv from "dotenv";
 import { musicState } from "../../utils/functions/playMusic";
 import { validationChannel } from "../../utils/functions/validationChannel";
+import { createEmbedInformation } from "../../utils/functions/createEmbedInformation";
+import { colors } from "../../utils/colors/colors.json";
 
 dotenv.config();
 
@@ -15,16 +17,26 @@ export default new Command({
     if (!(await validationChannel(interaction))) return;
 
     if (!musicState.player) {
-      await interaction.reply({ ephemeral: true, content: "Não há nenhuma música tocando no momento!" });
+      await interaction.reply({
+        ephemeral: true,
+        embeds: [
+          createEmbedInformation(colors.yellow, "Informação", "Não há nenhuma música tocando no momento!"),
+        ],
+      });
       return;
     }
 
     const pause = musicState.player.pause();
 
     if (pause) {
-      await interaction.reply({ content: "⏸️ A música foi pausada!" });
+      await interaction.reply({
+        embeds: [createEmbedInformation(colors.blue, "Informação", "⏸️ A música foi pausada!")],
+      });
       return;
     }
-    await interaction.reply({ ephemeral: true, content: "Houve um erro ao tentar pausar a música." });
+    await interaction.reply({
+      ephemeral: true,
+      embeds: [createEmbedInformation(colors.red, "Aviso", "Houve um erro ao tentar pausar a música.")],
+    });
   },
 });

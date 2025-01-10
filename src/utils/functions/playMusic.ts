@@ -15,7 +15,7 @@ export const musicState = {
 
 export function playMusic() {
   if (!musicState.queue.length) {
-    // musicState.connection?.destroy();
+    musicState.connection?.destroy();
     musicState.connection = null;
     musicState.player = null;
     return;

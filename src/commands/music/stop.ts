@@ -2,6 +2,8 @@ import { ApplicationCommandType } from "discord.js";
 import { Command } from "../../settings/types/Command";
 import { musicState } from "../../utils/functions/playMusic";
 import { validationChannel } from "../../utils/functions/validationChannel";
+import { createEmbedInformation } from "../../utils/functions/createEmbedInformation";
+import { colors } from "../../utils/colors/colors.json";
 
 export default new Command({
   name: "stop",
@@ -21,6 +23,10 @@ export default new Command({
       }
     }
 
-    interaction.reply({ content: "Música parada e fila de reprodução esvaziada!" });
+    interaction.reply({
+      embeds: [
+        createEmbedInformation(colors.red, "Informação", `Música parada e fila de reprodução esvaziada!`),
+      ],
+    });
   },
 });

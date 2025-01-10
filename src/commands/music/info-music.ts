@@ -42,7 +42,7 @@ export default new Command({
         }
       )
       .setFooter({
-        text: "Use os comandos corretamente para aproveitar as músicas 🎶",
+        text: `Use os comandos corretamente para aproveitar as músicas 🎶`,
         iconURL: interaction.user.displayAvatarURL(),
       });
 

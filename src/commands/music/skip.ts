@@ -2,6 +2,8 @@ import { ApplicationCommandType } from "discord.js";
 import { Command } from "../../settings/types/Command";
 import { musicState, playMusic } from "../../utils/functions/playMusic";
 import { validationChannel } from "../../utils/functions/validationChannel";
+import { createEmbedInformation } from "../../utils/functions/createEmbedInformation";
+import { colors } from "../../utils/colors/colors.json";
 
 export default new Command({
   name: "skip",
@@ -12,14 +14,28 @@ export default new Command({
     if (!(await validationChannel(interaction))) return;
 
     if (!musicState.connection) {
-      interaction.reply({ ephemeral: true, content: `Não existe música tocando!` });
+      interaction.reply({
+        ephemeral: true,
+        embeds: [createEmbedInformation(colors.yellow, "Informação", "Não existe música tocando!")],
+      });
     }
 
     if (musicState.queue.length === 0) {
-      interaction.reply({ ephemeral: true, content: `Não existe música na fila!` });
+      interaction.reply({
+        ephemeral: true,
+        embeds: [createEmbedInformation(colors.yellow, "Informação", "Não existe música na fila!")],
+      });
     }
 
-    await interaction.reply({ content: `🎶 ${musicState.queue[0]}` });
+    await interaction.reply({
+      embeds: [
+        createEmbedInformation(
+          colors.blueMusic,
+          "Informação",
+          `*${interaction.user.displayName}* música tocando! 🎶`
+        ),
+      ],
+    });
     playMusic();
   },
 });

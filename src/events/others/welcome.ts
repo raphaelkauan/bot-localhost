@@ -1,4 +1,4 @@
-import { EmbedBuilder, TextChannel } from "discord.js";
+import { EmbedBuilder, formatEmoji, TextChannel } from "discord.js";
 import { Event } from "../../settings/types/Event";
 import dotenv from "dotenv";
 import { client } from "../..";
@@ -8,8 +8,6 @@ dotenv.config();
 export default new Event({
   name: "guildMemberAdd",
   async run(interaction) {
-    const emojiCelular = client.emojis.cache.get("1326739542211956826");
-
     const channelWelcomeId = process.env.CHANNEL_WELCOME_ID;
 
     // @ts-ignore
@@ -22,7 +20,7 @@ export default new Event({
 
     const embed = new EmbedBuilder()
       .setColor("#ff0000")
-      .setTitle(`Salve, ${interaction.displayName}! <:celular:${emojiCelular}>`)
+      .setTitle(`Salve, ${interaction.displayName}! ${formatEmoji("1327092922495012909")}`)
       .setDescription(
         `Você acaba de entrar no servidor **localhost**. 
         Aqui você poderá interagir com a comunidade, encontrar vagas, conversar sobre programação, tecnologia e muito mais!`

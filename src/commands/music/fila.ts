@@ -4,6 +4,8 @@ import { musicState } from "../../utils/functions/playMusic";
 import ytdl from "@distube/ytdl-core";
 import dotenv from "dotenv";
 import { validationChannel } from "../../utils/functions/validationChannel";
+import { createEmbedInformation } from "../../utils/functions/createEmbedInformation";
+import { colors } from "../../utils/colors/colors.json";
 
 dotenv.config();
 
@@ -18,7 +20,13 @@ export default new Command({
     if (!musicState.queue.length) {
       await interaction.reply({
         ephemeral: true,
-        content: "A fila está vazia! Adicione músicas usando o comando `/play`.",
+        embeds: [
+          createEmbedInformation(
+            colors.yellow,
+            "Informação",
+            "A fila está vazia! Adicione músicas usando o comando `/play`."
+          ),
+        ],
       });
       return;
     }

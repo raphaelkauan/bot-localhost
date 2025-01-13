@@ -29,7 +29,7 @@ Além de enviar uma mensagem de boas-vindas sempre que um novo membro entra no s
 - **`/stop`**
   - Para a música, limpa a fila e desconecta o bot do canal de voz.
 
-## 🛠️ Tarefas
+## 📝 Tarefas
 
 ### Funcionalidades
 

@@ -49,7 +49,7 @@ Além de enviar uma mensagem de boas-vindas sempre que um novo membro entra no s
 
 - Como faço para rodar o projeto na minha máquina?
 
-  Você pode seguir o [Guia de instalação]().
+  Você pode seguir o [Guia de instalação](https://github.com/raphaelkauan/bot-localhost/blob/main/GUIA_INSTALACAO.md).
 
 - Onde posso pedir ajudar?
 

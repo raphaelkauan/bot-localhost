@@ -1,4 +1,4 @@
-import { ApplicationCommandType, EmbedBuilder } from "discord.js";
+import { ApplicationCommandType, EmbedBuilder, formatEmoji } from "discord.js";
 import { Command } from "../../settings/types/Command";
 import { musicState } from "../../utils/functions/playMusic";
 import ytdl from "@distube/ytdl-core";
@@ -31,7 +31,7 @@ export default new Command({
       return;
     }
 
-    interaction.deferReply();
+    interaction.deferReply({ ephemeral: true });
 
     const songTitles: string[] = [];
 
@@ -44,7 +44,12 @@ export default new Command({
     const embed = new EmbedBuilder()
       .setColor("#1DB954")
       .setTitle("🎶 Fila de Músicas")
-      .setDescription(`🦘 Música(s) que estão na fila no momento:\n\n ${songTitles.join("\n")}`)
+      .setDescription(
+        `${formatEmoji(
+          "1328450336888848486",
+          true
+        )} Música(s) que estão na fila no momento:\n\n ${songTitles.join("\n")}`
+      )
       //   .setFields({ name: "\n", value: "💡 Dica: Digite '/skip' para pular de música" })
       .setFooter({
         text: `Total: ${musicState.queue.length} música(s)`,

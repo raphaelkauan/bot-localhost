@@ -1,4 +1,4 @@
-import { ApplicationCommandOptionType, ApplicationCommandType } from "discord.js";
+import { ApplicationCommandOptionType, ApplicationCommandType, formatEmoji } from "discord.js";
 import { Command } from "../../settings/types/Command";
 import dotenv from "dotenv";
 import ytdl from "@distube/ytdl-core";
@@ -7,6 +7,7 @@ import { playMusic, musicState } from "../../utils/functions/playMusic";
 import { validationChannel } from "../../utils/functions/validationChannel";
 import { createEmbedInformation } from "../../utils/functions/createEmbedInformation";
 import { colors } from "../../utils/colors/colors.json";
+import { formatDate } from "tough-cookie";
 
 dotenv.config();
 
@@ -75,14 +76,20 @@ export default new Command({
             createEmbedInformation(
               colors.blueMusic,
               "Informação",
-              `*${interaction.user.displayName}* música tocando! 🎶`
+              `${interaction.user.displayName} sua música está tocando!`
             ),
           ],
         });
         return;
       }
       await interaction.reply({
-        embeds: [createEmbedInformation(colors.yellow, "Informação", `🦘 Agora sua música está na fila!`)],
+        embeds: [
+          createEmbedInformation(
+            colors.yellow,
+            "Informação",
+            `${formatEmoji("1328450336888848486", true)} Música adicionada na fila!`
+          ),
+        ],
       });
     } catch (error) {
       await interaction.reply({

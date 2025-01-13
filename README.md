@@ -31,7 +31,7 @@ Além de enviar uma mensagem de boas-vindas sempre que um novo membro entra no s
 
 ## 📝 Tarefas
 
-### Funcionalidades
+### Implementações
 
 - [ ] Melhorar o visual do embed enviado após a entrada de um novo membro no servidor.
 - [ ] Suporte a playlists do red. 🎶
@@ -44,6 +44,22 @@ Além de enviar uma mensagem de boas-vindas sempre que um novo membro entra no s
 - [x] Mostrar a fila de músicas com `/fila`
 - [x] Pular música com `/skip`
 - [x] Reproduzir música do YouTube com `/play`
+
+### ❓Perguntas
+
+- Como faço para rodar o projeto na minha máquina?
+
+  Você pode seguir o [Guia de instalação]().
+
+- Onde posso pedir ajudar?
+
+  Você pode criar uma [Issue no repositório](https://github.com/raphaelkauan/bot-localhost/issues).
+
+- Como faço para contrinuir com o projeto?
+
+  Você seguinte essa [Documentação](https://docs.github.com/pt/get-started/exploring-projects-on-github/contributing-to-a-project).
+
+---
 
 <div align="center">
   <sub>© 2025 Bot Discord</sub>

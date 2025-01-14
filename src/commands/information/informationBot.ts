@@ -1,6 +1,7 @@
 import { ApplicationCommandType, EmbedBuilder, formatEmoji } from "discord.js";
 import { Command } from "../../settings/types/Command";
 import { colors } from "../../utils/colors/colors.json";
+import { validationSuperUser } from "../../utils/functions/admin/validationSuperUser";
 
 export default new Command({
   name: "apresentacao-bot",
@@ -8,8 +9,10 @@ export default new Command({
   description: "Este comando fornece uma breve apresentação do bot.",
 
   async run({ interaction }) {
+    if (!(await validationSuperUser(interaction))) return;
+
     const embed = new EmbedBuilder()
-      .setColor("#d9420f")
+      .setColor("#f64301")
       .setTitle(`Stuart`)
       .setThumbnail(interaction.client.user.displayAvatarURL())
       .setDescription(

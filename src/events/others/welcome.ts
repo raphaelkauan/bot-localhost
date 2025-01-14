@@ -19,7 +19,7 @@ export default new Event({
 
     const embed = new EmbedBuilder()
       .setColor("#ff0000")
-      .setTitle(`Salve, ${interaction.displayName}! ${formatEmoji("1327300455923187712")}`)
+      .setTitle(`Salve, ${interaction.displayName}!`)
       .setDescription(
         `Você acaba de entrar no servidor **localhost**. 
         Aqui você poderá interagir com a comunidade, encontrar vagas, conversar sobre programação, tecnologia e muito mais!`
@@ -28,20 +28,22 @@ export default new Event({
       .addFields(
         {
           name: "📜 Regras",
-          value:
-            "Não deixe de conferir o canal de <#1326738060666470535> para saber como aproveitar ao máximo o servidor!",
+          value: "Não deixe de conferir o canal de <#1326738060666470535> para não ter nenhum problema!",
+          inline: true,
         },
         {
           name: "📚 Conteúdo",
           value: "Confira o canal de <#1326738060666470535> para dicas, tutoriais e materiais úteis!",
+          inline: true,
         },
         {
           name: "💬 Canais",
-          value: "Participe das conversas nos diversos canais disponíveis e se conecte com a galera!",
+          value: "Participe das conversas nos diversos canais disponíveis!",
+          inline: true,
         }
       )
       .setFooter({
-        text: "Aproveite o servidor!",
+        text: `Aproveite o servidor!`,
       });
 
     await channel.send({ content: `<@${interaction.user.id}>`, embeds: [embed] });

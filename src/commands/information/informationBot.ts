@@ -1,4 +1,4 @@
-import { ApplicationCommandType, EmbedBuilder, formatEmoji } from "discord.js";
+import { ApplicationCommandType, ColorResolvable, EmbedBuilder, formatEmoji } from "discord.js";
 import { Command } from "../../settings/types/Command";
 import { colors } from "../../utils/colors/colors.json";
 import { validationSuperUser } from "../../utils/functions/admin/validationSuperUser";
@@ -12,7 +12,7 @@ export default new Command({
     if (!(await validationSuperUser(interaction))) return;
 
     const embed = new EmbedBuilder()
-      .setColor("#f64301")
+      .setColor(colors.yellow as ColorResolvable)
       .setTitle(`Stuart`)
       .setThumbnail(interaction.client.user.displayAvatarURL())
       .setDescription(

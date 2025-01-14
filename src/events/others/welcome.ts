@@ -29,17 +29,14 @@ export default new Event({
         {
           name: "📜 Regras",
           value: "Não deixe de conferir o canal de <#1326738060666470535> para não ter nenhum problema!",
-          inline: true,
         },
         {
           name: "📚 Conteúdo",
           value: "Confira o canal de <#1326738060666470535> para dicas, tutoriais e materiais úteis!",
-          inline: true,
         },
         {
           name: "💬 Canais",
           value: "Participe das conversas nos diversos canais disponíveis!",
-          inline: true,
         }
       )
       .setFooter({

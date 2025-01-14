@@ -9,7 +9,7 @@ export default new Command({
 
   async run({ interaction }) {
     const embed = new EmbedBuilder()
-      .setColor("#ff0000")
+      .setColor("#d9420f")
       .setTitle(`Stuart`)
       .setThumbnail(interaction.client.user.displayAvatarURL())
       .setDescription(

@@ -55,7 +55,7 @@ Além de enviar uma mensagem de boas-vindas sempre que um novo membro entra no s
 
   Você pode criar uma [Issue no repositório](https://github.com/raphaelkauan/bot-localhost/issues).
 
-- Como faço para contrinuir com o projeto?
+- Como faço para contribuir com o projeto?
 
   Você seguinte essa [Documentação](https://docs.github.com/pt/get-started/exploring-projects-on-github/contributing-to-a-project).
 

@@ -14,6 +14,12 @@ export const musicState = {
 };
 
 export async function playMusic() {
+  if (!musicState.queue.length) {
+    musicState.connection = null;
+    musicState.player = null;
+    return;
+  }
+
   const song = musicState.queue.shift()!;
 
   try {

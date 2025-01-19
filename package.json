@@ -20,6 +20,7 @@
     "@distube/ytdl-core": "^4.15.7",
     "discord.js": "^14.16.3",
     "dotenv": "^16.4.5",
+    "ffmpeg-static": "^5.2.0",
     "ts-lib": "^0.0.5"
   }
 }

@@ -13,14 +13,7 @@ export const musicState = {
   connection: null as VoiceConnection | null,
 };
 
-export function playMusic() {
-  if (!musicState.queue.length) {
-    musicState.connection?.destroy();
-    musicState.connection = null;
-    musicState.player = null;
-    return;
-  }
-
+export async function playMusic() {
   const song = musicState.queue.shift()!;
 
   try {
@@ -32,8 +25,8 @@ export function playMusic() {
     musicState.player.play(resource);
     musicState.connection?.subscribe(musicState.player);
 
-    musicState.player.on(AudioPlayerStatus.Idle, () => {
-      playMusic();
+    musicState.player.on(AudioPlayerStatus.Idle, async () => {
+      await playMusic();
     });
   } catch (error) {
     console.log(`Erro ao tocar música: ${error}`);

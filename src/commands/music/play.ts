@@ -7,7 +7,6 @@ import { playMusic, musicState } from "../../utils/functions/playMusic";
 import { validationChannel } from "../../utils/functions/validationChannel";
 import { createEmbedInformation } from "../../utils/functions/createEmbedInformation";
 import { colors } from "../../utils/colors/colors.json";
-import { formatDate } from "tough-cookie";
 
 dotenv.config();
 
@@ -69,7 +68,7 @@ export default new Command({
           adapterCreator: interaction.guild!.voiceAdapterCreator,
         });
 
-        playMusic();
+        await playMusic();
 
         await interaction.reply({
           embeds: [

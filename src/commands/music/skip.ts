@@ -36,6 +36,6 @@ export default new Command({
         ),
       ],
     });
-    playMusic();
+    await playMusic();
   },
 });

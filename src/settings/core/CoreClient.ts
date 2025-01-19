@@ -16,7 +16,7 @@ import { EventType } from "../types/Event";
 
 dotenv.config();
 
-const fileCondition = (fileName: string) => fileName.endsWith(".ts");
+const fileCondition = (fileName: string) => fileName.endsWith(".ts") || fileName.endsWith(".js");
 
 export class CoreClient extends Client {
   public commands: Collection<string, CommandType> = new Collection();
@@ -61,7 +61,7 @@ export class CoreClient extends Client {
   private async prepareCommands() {
     const slashCommands: Array<ApplicationCommandDataResolvable> = new Array();
 
-    const commandsPath = path.join(__dirname, "../..", "commands");
+    const commandsPath = path.join(__dirname, "..", "..", "commands");
 
     try {
       const categoriesCommands = fs.readdirSync(commandsPath);

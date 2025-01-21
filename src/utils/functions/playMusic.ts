@@ -5,7 +5,7 @@ import {
   createAudioResource,
   VoiceConnection,
 } from "@discordjs/voice";
-import ytdl from "@distube/ytdl-core";
+import ytdl, { getInfo } from "@distube/ytdl-core";
 
 export const musicState = {
   queue: [] as string[],
@@ -22,8 +22,17 @@ export async function playMusic() {
 
   const song = musicState.queue.shift()!;
 
+  const formatRefactor = (await getInfo(song)).formats[0];
+
+  console.log(`info + ${formatRefactor}`);
+
   try {
-    const stream = ytdl(song, { filter: "audioonly", quality: "highestaudio", highWaterMark: 1 << 25 });
+    const stream = ytdl(song, {
+      filter: "audioonly",
+      quality: "highestaudio",
+      highWaterMark: 1 << 30,
+      dlChunkSize: 1024 * 1024 * 10,
+    });
     const resource = createAudioResource(stream);
 
     if (!musicState.player) musicState.player = createAudioPlayer();
@@ -34,8 +43,15 @@ export async function playMusic() {
     musicState.player.on(AudioPlayerStatus.Idle, async () => {
       await playMusic();
     });
+
+    musicState.player.on("error", (erro) => {
+      console.log(erro);
+    });
+
+    stream.on("error", (erro) => {
+      console.log(erro);
+    });
   } catch (error) {
     console.log(`Erro ao tocar música: ${error}`);
-    playMusic();
   }
 }

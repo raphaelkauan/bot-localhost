@@ -27,6 +27,8 @@ export default new Command({
       });
     }
 
+    await playMusic();
+
     await interaction.reply({
       embeds: [
         createEmbedInformation(
@@ -36,6 +38,5 @@ export default new Command({
         ),
       ],
     });
-    await playMusic();
   },
 });

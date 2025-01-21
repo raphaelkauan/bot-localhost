@@ -1,12 +1,12 @@
 import { ApplicationCommandOptionType, ApplicationCommandType, formatEmoji } from "discord.js";
 import { Command } from "../../settings/types/Command";
 import dotenv from "dotenv";
-import ytdl from "@distube/ytdl-core";
 import { AudioPlayerStatus, joinVoiceChannel } from "@discordjs/voice";
 import { playMusic, musicState } from "../../utils/functions/playMusic";
 import { validationChannel } from "../../utils/functions/validationChannel";
 import { createEmbedInformation } from "../../utils/functions/createEmbedInformation";
 import { colors } from "../../utils/colors/colors.json";
+import { validationUrl } from "../../utils/functions/validationUrl";
 
 dotenv.config();
 
@@ -46,15 +46,7 @@ export default new Command({
     const url = interaction.options.get("link", true).value;
 
     // @ts-ignore
-    if (!ytdl.validateURL(url)) {
-      await interaction.reply({
-        ephemeral: true,
-        embeds: [
-          createEmbedInformation(colors.yellow, "Informação", "Por favor, insira um link válido do YouTube"),
-        ],
-      });
-      return;
-    }
+    if (!(await validationUrl(url, interaction))) return;
 
     try {
       if (typeof url === "string") {

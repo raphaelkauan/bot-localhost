@@ -6,6 +6,7 @@ import {
   VoiceConnection,
 } from "@discordjs/voice";
 import ytdl, { getInfo } from "@distube/ytdl-core";
+import fs from "fs";
 
 export const musicState = {
   queue: [] as string[],
@@ -22,16 +23,22 @@ export async function playMusic() {
 
   const song = musicState.queue.shift()!;
 
-  const formatRefactor = (await getInfo(song)).formats[0];
+  const json = JSON.parse(fs.readFileSync("cookie.json", "utf8"));
+  const agent = ytdl.createAgent(json);
 
-  console.log(`info + ${formatRefactor}`);
+  const format = (await getInfo(song)).formats[0];
+
+  if (!format) {
+    console.log("Requisição bloqueada!");
+    return;
+  }
 
   try {
     const stream = ytdl(song, {
       filter: "audioonly",
       quality: "highestaudio",
       highWaterMark: 1 << 30,
-      dlChunkSize: 1024 * 1024 * 10,
+      agent,
     });
     const resource = createAudioResource(stream);
 

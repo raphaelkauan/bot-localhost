@@ -1,4 +1,4 @@
-import { EmbedBuilder, formatEmoji, TextChannel } from "discord.js";
+import { EmbedBuilder, TextChannel } from "discord.js";
 import { Event } from "../../settings/types/Event";
 import dotenv from "dotenv";
 

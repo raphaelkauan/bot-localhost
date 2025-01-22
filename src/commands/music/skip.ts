@@ -34,7 +34,7 @@ export default new Command({
         createEmbedInformation(
           colors.blueMusic,
           "Informação",
-          `*${interaction.user.displayName}* música tocando! 🎶`
+          `${interaction.user.displayName} música tocando!`
         ),
       ],
     });

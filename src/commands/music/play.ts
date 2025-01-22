@@ -43,6 +43,24 @@ export default new Command({
 
     if (!(await validationChannel(interaction))) return;
 
+    if (
+      voiceChannelId !== interaction.guild?.members.me?.voice.channelId &&
+      musicState &&
+      musicState.player
+    ) {
+      await interaction.reply({
+        ephemeral: true,
+        embeds: [
+          createEmbedInformation(
+            colors.yellow,
+            "Informação",
+            "Alguém já está utilizando o bot em outro canal de voz. Se você deseja ouvir uma música, entre no canal dessa pessoa ou aguarde até que ela termine de usar o bot!"
+          ),
+        ],
+      });
+      return;
+    }
+
     const url = interaction.options.get("link", true).value;
 
     // @ts-ignore

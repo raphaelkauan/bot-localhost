@@ -63,6 +63,10 @@ export default new Command({
 
     const url = interaction.options.get("link", true).value;
 
+    // @ts-ignores
+    // >>> implementar link de playlist <<
+    const isPlaylist = url.includes("playlist") || url.includes("&list=");
+
     // @ts-ignore
     if (!(await validationUrl(url, interaction))) return;
 

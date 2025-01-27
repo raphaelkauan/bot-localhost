@@ -13,10 +13,13 @@ import fs from "fs";
 import path from "path";
 import { CommandType, ComponentsButton, ComponentsModal, ComponentsSelect } from "../types/Command";
 import { EventType } from "../types/Event";
+import { LavalinkClient } from "./LavalinkClient";
 
 dotenv.config();
 
 const fileCondition = (fileName: string) => fileName.endsWith(".ts") || fileName.endsWith(".js");
+
+const lavaLink = new LavalinkClient();
 
 export class CoreClient extends Client {
   public commands: Collection<string, CommandType> = new Collection();
@@ -43,6 +46,7 @@ export class CoreClient extends Client {
     this.prepareCommands();
     this.registerEvents();
     this.login(process.env.BOT_TOKEN_DC);
+    lavaLink.initialize();
   }
 
   private async registerCommands(commands: Array<ApplicationCommandDataResolvable>) {

@@ -1,6 +1,15 @@
 import { CoreClient } from "./settings/core/CoreClient";
+import { LavalinkClient } from "./settings/core/LavalinkClient";
 
-const client = new CoreClient();
-client.start();
+export const client = new CoreClient();
+export let manager: ReturnType<typeof LavalinkClient>;
 
-export { client };
+client.start().then(() => {
+  console.log("Bot iniciado com sucesso!");
+
+  if (!client.user?.id) {
+    throw new Error("Falha ao obter o ID do bot após o login.");
+  }
+
+  client.initializerLavalink(client.user.id);
+});

@@ -1,6 +1,6 @@
 import { ApplicationCommandType } from "discord.js";
 import { Command } from "../../settings/types/Command";
-import { musicState } from "../../utils/functions/playMusic";
+import { musicState } from "../music/play";
 import { validationChannel } from "../../utils/functions/validationChannel";
 import { createEmbedInformation } from "../../utils/functions/createEmbedInformation";
 import { colors } from "../../utils/colors/colors.json";
@@ -13,7 +13,7 @@ export default new Command({
   async run({ interaction }) {
     if (!(await validationChannel(interaction))) return;
 
-    if (!musicState.player) {
+    if (!musicState.playerAudio) {
       await interaction.reply({
         ephemeral: true,
         embeds: [
@@ -23,8 +23,8 @@ export default new Command({
       return;
     }
 
-    if (musicState.player.state.status === "paused") {
-      musicState.player.unpause();
+    if (musicState.playerAudio.state.status === "paused") {
+      musicState.playerAudio.unpause();
 
       await interaction.reply({
         embeds: [createEmbedInformation(colors.blue, "Informação", "▶️ A música foi retomada!")],

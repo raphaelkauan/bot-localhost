@@ -1,6 +1,6 @@
 import { ApplicationCommandType, EmbedBuilder, formatEmoji } from "discord.js";
 import { Command } from "../../settings/types/Command";
-import { musicState } from "../../utils/functions/playMusic";
+import { musicState } from "../music/play";
 import ytdl from "@distube/ytdl-core";
 import dotenv from "dotenv";
 import { validationChannel } from "../../utils/functions/validationChannel";

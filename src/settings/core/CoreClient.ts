@@ -13,7 +13,7 @@ import fs from "fs";
 import path from "path";
 import { CommandType, ComponentsButton, ComponentsModal, ComponentsSelect } from "../types/Command";
 import { EventType } from "../types/Event";
-import { Manager } from "erela.js";
+import { LavalinkClient } from "./LavalinkClient";
 
 dotenv.config();
 
@@ -40,10 +40,23 @@ export class CoreClient extends Client {
     });
   }
 
-  public start() {
-    this.prepareCommands();
-    this.registerEvents();
-    this.login(process.env.BOT_TOKEN_DC);
+  public async start() {
+    await this.prepareCommands();
+    await this.registerEvents();
+    await this.login(process.env.BOT_TOKEN_DC);
+  }
+
+  public async initializerLavalink(id: string) {
+    const manager = LavalinkClient(this);
+    // @ts-ignore
+    manager.init(id);
+
+    manager.on("nodeConnected", (node) => {
+      console.log("Lavalink funcionando!");
+    });
+    manager.on("nodeError", (erro) => {
+      console.log(`Lavalink não funcionando! ${erro}`);
+    });
   }
 
   private async registerCommands(commands: Array<ApplicationCommandDataResolvable>) {

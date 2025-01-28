@@ -1,5 +1,5 @@
 import { Event } from "../../settings/types/Event";
-import { musicState } from "../../utils/functions/playMusic";
+import { musicState } from "../../commands/music/play";
 
 export default new Event({
   name: "voiceStateUpdate",
@@ -10,7 +10,7 @@ export default new Event({
     if (botVoiceChannel.members.size == 1) {
       musicState.connection?.destroy();
       musicState.connection = null;
-      musicState.player = null;
+      musicState.playerAudio = null;
       return;
     }
   },

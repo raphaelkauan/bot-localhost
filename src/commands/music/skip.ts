@@ -1,6 +1,6 @@
 import { ApplicationCommandType } from "discord.js";
 import { Command } from "../../settings/types/Command";
-import { musicState, playMusic } from "../../utils/functions/playMusic";
+import { musicState } from "../music/play";
 import { validationChannel } from "../../utils/functions/validationChannel";
 import { createEmbedInformation } from "../../utils/functions/createEmbedInformation";
 import { colors } from "../../utils/colors/colors.json";
@@ -27,7 +27,7 @@ export default new Command({
       });
     }
 
-    await playMusic();
+    // await playMusic();
 
     await interaction.reply({
       embeds: [

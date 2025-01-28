@@ -1,7 +1,7 @@
 import { ApplicationCommandType } from "discord.js";
 import { Command } from "../../settings/types/Command";
 import dotenv from "dotenv";
-import { musicState } from "../../utils/functions/playMusic";
+import { musicState } from "../music/play";
 import { validationChannel } from "../../utils/functions/validationChannel";
 import { createEmbedInformation } from "../../utils/functions/createEmbedInformation";
 import { colors } from "../../utils/colors/colors.json";
@@ -16,7 +16,7 @@ export default new Command({
   async run({ interaction }) {
     if (!(await validationChannel(interaction))) return;
 
-    if (!musicState.player) {
+    if (!musicState.playerAudio) {
       await interaction.reply({
         ephemeral: true,
         embeds: [
@@ -26,7 +26,7 @@ export default new Command({
       return;
     }
 
-    const pause = musicState.player.pause();
+    const pause = musicState.playerAudio.pause();
 
     if (pause) {
       await interaction.reply({

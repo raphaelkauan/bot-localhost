@@ -1,6 +1,6 @@
 import { ApplicationCommandType } from "discord.js";
 import { Command } from "../../settings/types/Command";
-import { musicState } from "../../utils/functions/playMusic";
+import { musicState } from "../music/play";
 import { validationChannel } from "../../utils/functions/validationChannel";
 import { createEmbedInformation } from "../../utils/functions/createEmbedInformation";
 import { colors } from "../../utils/colors/colors.json";
@@ -16,7 +16,6 @@ export default new Command({
     if (musicState.connection) {
       musicState.connection.destroy();
       musicState.connection = null;
-      musicState.player = null;
 
       while (musicState.queue.length) {
         musicState.queue.pop();

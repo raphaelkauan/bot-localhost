@@ -39,7 +39,11 @@ CHANNEL_MUSIC_ID=id_do_canal_musica
 CHANNEL_WELCOME_ID=id_do_canal_de_entrada
 ```
 
-### 4. Inicie o projeto
+### 4. Configure um arquivo `cookie.json`
+
+Crie um arquivo `cookie.json` na raiz do projeto e adicione um cookie do Youtube.
+
+### 5. Inicie o projeto
 
 Agora você pode iniciar o projeto com o seguinte comando:
 

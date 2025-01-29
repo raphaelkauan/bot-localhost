@@ -14,6 +14,7 @@ import path from "path";
 import { CommandType, ComponentsButton, ComponentsModal, ComponentsSelect } from "../types/Command";
 import { EventType } from "../types/Event";
 import { LavalinkClient } from "./LavalinkClient";
+import { Manager } from "moonlink.js";
 
 dotenv.config();
 
@@ -46,9 +47,8 @@ export class CoreClient extends Client {
     await this.login(process.env.BOT_TOKEN_DC);
   }
 
-  public async initializerLavalink(id: string) {
+  public async initializerLavalink(id: string): Promise<Manager> {
     const manager = LavalinkClient(this);
-    // @ts-ignore
     manager.init(id);
 
     manager.on("nodeConnected", (node) => {
@@ -57,6 +57,7 @@ export class CoreClient extends Client {
     manager.on("nodeError", (erro) => {
       console.log(`Lavalink não funcionando! ${erro}`);
     });
+    return manager;
   }
 
   private async registerCommands(commands: Array<ApplicationCommandDataResolvable>) {

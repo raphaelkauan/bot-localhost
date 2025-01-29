@@ -2,3 +2,6 @@
 .env
 /dist
 cookie.json
+/lavalink/logs
+/lavalink/plugins
+/lavalink/application.yml

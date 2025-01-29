@@ -1,8 +1,10 @@
+import { Manager } from "moonlink.js";
 import { CoreClient } from "./settings/core/CoreClient";
 import { LavalinkClient } from "./settings/core/LavalinkClient";
 
 export const client = new CoreClient();
-export let manager: ReturnType<typeof LavalinkClient>;
+// @ts-ignore
+export let manager: Promise<Manager>;
 
 client.start().then(() => {
   console.log("Bot iniciado com sucesso!");
@@ -11,5 +13,5 @@ client.start().then(() => {
     throw new Error("Falha ao obter o ID do bot após o login.");
   }
 
-  client.initializerLavalink(client.user.id);
+  manager = client.initializerLavalink(client.user.id);
 });

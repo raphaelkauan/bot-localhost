@@ -1,12 +1,13 @@
 import { ApplicationCommandOptionType, ApplicationCommandType, formatEmoji } from "discord.js";
 import { Command } from "../../settings/types/Command";
 import dotenv from "dotenv";
-import { AudioPlayer, joinVoiceChannel, VoiceConnection } from "@discordjs/voice";
+import { AudioPlayer, AudioPlayerStatus, joinVoiceChannel, VoiceConnection } from "@discordjs/voice";
 import { validationChannel } from "../../utils/functions/validationChannel";
 import { createEmbedInformation } from "../../utils/functions/createEmbedInformation";
 import { colors } from "../../utils/colors/colors.json";
 import { validationUrl } from "../../utils/functions/validationUrl";
 import { client, manager } from "../..";
+import { decodeTrack, Player, Queue } from "moonlink.js";
 
 dotenv.config();
 
@@ -73,10 +74,6 @@ export default new Command({
     // @ts-ignore
     if (!(await validationUrl(url, interaction))) return;
 
-    // @ts-ignores
-    // >>> implementar link de playlist <<
-    const isPlaylist = url.includes("playlist") || url.includes("&list=");
-
     const player = (await manager).createPlayer({
       // @ts-ignore
       guildId: interaction.guild?.id,
@@ -90,60 +87,80 @@ export default new Command({
         musicState.queue.push(url);
       }
 
-      if (!musicState.connection) {
-        musicState.connection = joinVoiceChannel({
-          channelId: voiceChannelId,
-          guildId: interaction.guild!.id,
-          adapterCreator: interaction.guild!.voiceAdapterCreator,
+      if (player.playing) {
+        const song = musicState.queue.shift()!;
+
+        const res = await (
+          await manager
+        ).search({
+          query: song,
+          source: "youtube",
+          requester: interaction.user,
         });
+
+        if (res.loadType === "loadfailed") {
+          return;
+        }
+
+        let track = res.tracks[0];
+        player.queue.add(track);
       }
 
-      const song = musicState.queue.shift()!;
+      if (!player.playing) {
+        if (!musicState.connection) {
+          musicState.connection = joinVoiceChannel({
+            channelId: voiceChannelId,
+            guildId: interaction.guild!.id,
+            adapterCreator: interaction.guild!.voiceAdapterCreator,
+          });
+        }
 
-      const res = await (
-        await manager
-      ).search({
-        query: song,
-        source: "youtube",
-        requester: interaction.user,
-      });
+        console.log("teste");
 
-      if (res.loadType === "loadfailed") {
+        const song = musicState.queue.shift()!;
+
+        const res = await (
+          await manager
+        ).search({
+          query: song,
+          source: "youtube",
+          requester: interaction.user,
+        });
+
+        if (res.loadType === "loadfailed") {
+          return;
+        }
+
+        let track = res.tracks[0];
+        player.queue.add(track);
+        if (!player.playing && !player.paused) {
+          player.play();
+        }
+
+        (await manager).on("trackEnd", async (player: Player) => {
+          player.stop();
+        });
+
+        await interaction.reply({
+          embeds: [
+            createEmbedInformation(
+              colors.blueMusic,
+              "Informação",
+              `**${interaction.user.displayName}** sua música está tocando!`
+            ),
+          ],
+        });
         return;
       }
-
-      let track = res.tracks[0];
-      player.queue.add(track);
-      if (!player.playing && !player.paused) {
-        console.log("1");
-        player.play();
-        console.log("2");
-      }
-
-      (await manager).on("trackStart", (player, track) => {
-        console.log(`Iniciando a reprodução de: ${track.title}`);
-      });
-
       await interaction.reply({
         embeds: [
           createEmbedInformation(
-            colors.blueMusic,
+            colors.yellow,
             "Informação",
-            `${interaction.user.displayName} sua música está tocando!`
+            `${formatEmoji("1328450336888848486", true)} Música adicionada na fila!`
           ),
         ],
       });
-      return;
-
-      // await interaction.reply({
-      //   embeds: [
-      //     createEmbedInformation(
-      //       colors.yellow,
-      //       "Informação",
-      //       `${formatEmoji("1328450336888848486", true)} Música adicionada na fila!`
-      //     ),
-      //   ],
-      // });
     } catch (error) {
       await interaction.reply({
         ephemeral: true,

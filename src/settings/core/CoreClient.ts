@@ -51,12 +51,18 @@ export class CoreClient extends Client {
     const manager = LavalinkClient(this);
     manager.init(id);
 
-    manager.on("nodeConnected", (node) => {
+    manager.on("nodeConnected", () => {
       console.log("Lavalink funcionando!");
     });
+
     manager.on("nodeError", (erro) => {
       console.log(`Lavalink não funcionando! ${erro}`);
     });
+
+    this.on("raw", (d) => {
+      manager.packetUpdate(d);
+    });
+
     return manager;
   }
 

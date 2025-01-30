@@ -13,7 +13,9 @@ export const LavalinkClient = (client: Client) => {
         secure: false,
       },
     ],
-    options: { clientId: "1328431241086898216" },
+    options: {
+      clientId: "1328431241086898216",
+    },
     sendPayload: (guildId: string, payload: string) => {
       const guild = client.guilds.cache.get(guildId);
       if (guild) guild.shard.send(JSON.parse(payload));

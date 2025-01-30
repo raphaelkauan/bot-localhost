@@ -6,7 +6,7 @@ import { validationChannel } from "../../utils/functions/validationChannel";
 import { createEmbedInformation } from "../../utils/functions/createEmbedInformation";
 import { colors } from "../../utils/colors/colors.json";
 import { validationUrl } from "../../utils/functions/validationUrl";
-import { manager } from "../..";
+import { client, manager } from "../..";
 
 dotenv.config();
 
@@ -83,9 +83,6 @@ export default new Command({
       voiceChannelId: voiceChannelId,
       textChannelId: textChannelId,
       autoPlay: true,
-      volume: 100,
-      selfDeaf: true,
-      selfMute: false,
     });
 
     try {
@@ -93,11 +90,13 @@ export default new Command({
         musicState.queue.push(url);
       }
 
-      musicState.connection = joinVoiceChannel({
-        channelId: voiceChannelId,
-        guildId: interaction.guild!.id,
-        adapterCreator: interaction.guild!.voiceAdapterCreator,
-      });
+      if (!musicState.connection) {
+        musicState.connection = joinVoiceChannel({
+          channelId: voiceChannelId,
+          guildId: interaction.guild!.id,
+          adapterCreator: interaction.guild!.voiceAdapterCreator,
+        });
+      }
 
       const song = musicState.queue.shift()!;
 
@@ -106,34 +105,19 @@ export default new Command({
       ).search({
         query: song,
         source: "youtube",
+        requester: interaction.user,
       });
 
       if (res.loadType === "loadfailed") {
         return;
       }
 
-      console.log("res.query " + res.query);
-
-      console.log("res.playlistInfo " + res.playlistInfo.selectedTrack.toString);
-
-      console.log("res.source " + res.source);
-
-      console.log("artworkUrl " + res.tracks[0].artworkUrl);
-      console.log("author " + res.tracks[0].author);
-      console.log("identifier " + res.tracks[0].identifier);
-      console.log("isStream " + res.tracks[0].isStream);
-      console.log("requestedBy " + res.tracks[0].requestedBy);
-      console.log("url " + res.tracks[0].url);
-      console.log("time " + res.tracks[0].time);
-      console.log("title " + res.tracks[0].title);
-      console.log("isrc " + res.tracks[0].isrc);
-      console.log("position " + res.tracks[0].position);
-      console.log("duration " + res.tracks[0].duration);
-
-      const track = res.tracks[0];
+      let track = res.tracks[0];
       player.queue.add(track);
       if (!player.playing && !player.paused) {
+        console.log("1");
         player.play();
+        console.log("2");
       }
 
       (await manager).on("trackStart", (player, track) => {

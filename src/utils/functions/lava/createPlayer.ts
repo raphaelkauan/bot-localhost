@@ -1,11 +1,16 @@
-import { client, manager } from "../../..";
+import { CommandInteraction } from "discord.js";
+import { manager } from "../../..";
 
-export function createPlayer(voiceChannelId: string) {}
+export class MyPlayer {
+  public async createPlayer(interaction: CommandInteraction) {
+    const guildMember = interaction.guild?.members.cache.get(interaction.user.id);
 
-// const player = (await manager).createPlayer({
-//   // @ts-ignore
-//   guildId: interaction.guild?.id,
-//   voiceChannelId: voiceChannelId,
-//   textChannelId: textChannelId,
-//   autoPlay: true,
-// });
+    const m = await manager;
+    return m.createPlayer({
+      guildId: interaction.guild?.id!,
+      voiceChannelId: guildMember?.voice.channelId!,
+      textChannelId: interaction.channelId,
+      autoPlay: true,
+    });
+  }
+}

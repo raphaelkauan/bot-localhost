@@ -1,13 +1,14 @@
 import { ApplicationCommandOptionType, ApplicationCommandType, formatEmoji } from "discord.js";
 import { Command } from "../../settings/types/Command";
 import dotenv from "dotenv";
-import { AudioPlayer, AudioPlayerStatus, joinVoiceChannel, VoiceConnection } from "@discordjs/voice";
+import { AudioPlayer, joinVoiceChannel, VoiceConnection } from "@discordjs/voice";
 import { validationChannel } from "../../utils/functions/validationChannel";
 import { createEmbedInformation } from "../../utils/functions/createEmbedInformation";
 import { colors } from "../../utils/colors/colors.json";
 import { validationUrl } from "../../utils/functions/validationUrl";
-import { client, manager } from "../..";
-import { decodeTrack, Player, Queue } from "moonlink.js";
+import { manager } from "../..";
+import { Player } from "moonlink.js";
+import { MyPlayer } from "../../utils/functions/lava/createPlayer";
 
 dotenv.config();
 
@@ -74,20 +75,15 @@ export default new Command({
     // @ts-ignore
     if (!(await validationUrl(url, interaction))) return;
 
-    const player = (await manager).createPlayer({
-      // @ts-ignore
-      guildId: interaction.guild?.id,
-      voiceChannelId: voiceChannelId,
-      textChannelId: textChannelId,
-      autoPlay: true,
-    });
-
     try {
       if (typeof url === "string") {
         musicState.queue.push(url);
       }
 
-      if (player.playing) {
+      const myPlayer = new MyPlayer();
+      const player = myPlayer.createPlayer(interaction);
+
+      if ((await player).playing) {
         const song = musicState.queue.shift()!;
 
         const res = await (
@@ -103,10 +99,10 @@ export default new Command({
         }
 
         let track = res.tracks[0];
-        player.queue.add(track);
+        (await player).queue.add(track);
       }
 
-      if (!player.playing) {
+      if (!(await player).playing) {
         if (!musicState.connection) {
           musicState.connection = joinVoiceChannel({
             channelId: voiceChannelId,
@@ -115,8 +111,6 @@ export default new Command({
           });
         }
 
-        console.log("teste");
-
         const song = musicState.queue.shift()!;
 
         const res = await (
@@ -132,14 +126,16 @@ export default new Command({
         }
 
         let track = res.tracks[0];
-        player.queue.add(track);
-        if (!player.playing && !player.paused) {
-          player.play();
+        (await player).queue.add(track);
+        if (!(await player).playing && !(await player).paused) {
+          (await player).play();
         }
 
-        (await manager).on("trackEnd", async (player: Player) => {
-          player.stop();
-        });
+        // (await manager).on("trackEnd", () => {
+        //   player.then((m) => {
+        //     m.stop();
+        //   });
+        // });
 
         await interaction.reply({
           embeds: [

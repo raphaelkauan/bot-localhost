@@ -1,11 +1,11 @@
 import { ApplicationCommandType, EmbedBuilder, formatEmoji } from "discord.js";
 import { Command } from "../../settings/types/Command";
-import { musicState } from "../music/play";
-import ytdl from "@distube/ytdl-core";
 import dotenv from "dotenv";
 import { validationChannel } from "../../utils/functions/validationChannel";
 import { createEmbedInformation } from "../../utils/functions/createEmbedInformation";
 import { colors } from "../../utils/colors/colors.json";
+import MyPlayer from "../../utils/classes/MyPlayer";
+import { manager } from "../..";
 
 dotenv.config();
 
@@ -17,7 +17,18 @@ export default new Command({
   async run({ interaction }) {
     if (!(await validationChannel(interaction))) return;
 
-    if (!musicState.queue.length) {
+    const guildMember = interaction.guild?.members.cache.get(interaction.user.id);
+    const voiceChannelId = guildMember?.voice.channelId;
+
+    const myPlayer = new MyPlayer(await manager);
+    const player = myPlayer.createMyPlayer(
+      interaction.guildId!,
+      voiceChannelId!,
+      interaction.channelId,
+      false
+    );
+
+    if (player.queue.size === 0) {
       await interaction.reply({
         ephemeral: true,
         embeds: [
@@ -31,14 +42,12 @@ export default new Command({
       return;
     }
 
-    interaction.deferReply({ ephemeral: true });
-
     const songTitles: string[] = [];
 
-    for (const [index, song] of musicState.queue.entries()) {
-      const songInfo = await ytdl.getInfo(song);
-      const title = songInfo.videoDetails.title;
-      songTitles.push(`**#${index + 1} - ${title}\n**`);
+    for (let i = 0; i < player.queue.tracks.length; i++) {
+      let title = player.queue.tracks[i].title;
+      console.log(title);
+      songTitles.push(`**#${i + 1} - ${title}\n**`);
     }
 
     const embed = new EmbedBuilder()
@@ -52,11 +61,11 @@ export default new Command({
       )
       //   .setFields({ name: "\n", value: "💡 Dica: Digite '/skip' para pular de música" })
       .setFooter({
-        text: `Total: ${musicState.queue.length} música(s)`,
+        text: `Total: ${player.queue.size} música(s)`,
         iconURL: interaction.user.displayAvatarURL(),
       })
       .setTimestamp();
 
-    await interaction.editReply({ embeds: [embed] });
+    await interaction.reply({ ephemeral: true, embeds: [embed] });
   },
 });

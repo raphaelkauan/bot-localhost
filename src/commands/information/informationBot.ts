@@ -39,7 +39,7 @@ export default new Command({
         {
           name: "`/play <link>`",
           value:
-            "Reproduz uma música no canal de voz a partir de um link do YouTube. Se já houver música tocando, a nova será adicionada à fila.",
+            "Reproduz uma música no canal de voz a partir de um link do YouTube. *O título da música permanece oculto*. Se já houver uma música tocando, a nova será adicionada à fila.",
         },
         {
           name: "`/pause`",

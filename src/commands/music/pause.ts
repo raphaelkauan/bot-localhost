@@ -1,10 +1,11 @@
 import { ApplicationCommandType } from "discord.js";
 import { Command } from "../../settings/types/Command";
 import dotenv from "dotenv";
-import { musicState } from "../music/play";
 import { validationChannel } from "../../utils/functions/validationChannel";
 import { createEmbedInformation } from "../../utils/functions/createEmbedInformation";
 import { colors } from "../../utils/colors/colors.json";
+import MyPlayer from "../../utils/classes/MyPlayer";
+import { manager } from "../..";
 
 dotenv.config();
 
@@ -16,7 +17,18 @@ export default new Command({
   async run({ interaction }) {
     if (!(await validationChannel(interaction))) return;
 
-    if (!musicState.playerAudio) {
+    const guildMember = interaction.guild?.members.cache.get(interaction.user.id);
+    const voiceChannelId = guildMember?.voice.channelId;
+
+    const myPlayer = new MyPlayer(await manager);
+    const player = myPlayer.createMyPlayer(
+      interaction.guildId!,
+      voiceChannelId!,
+      interaction.channelId,
+      false
+    );
+
+    if (!player.playing) {
       await interaction.reply({
         ephemeral: true,
         embeds: [
@@ -26,7 +38,7 @@ export default new Command({
       return;
     }
 
-    const pause = musicState.playerAudio.pause();
+    const pause = player.pause();
 
     if (pause) {
       await interaction.reply({

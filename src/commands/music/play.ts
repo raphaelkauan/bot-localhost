@@ -13,6 +13,7 @@ dotenv.config();
 
 export const musicState = {
   queue: [] as string[],
+  musicTitle: [] as string[],
   playerAudio: null as AudioPlayer | null,
   connection: null as VoiceConnection | null,
 };

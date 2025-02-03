@@ -7,7 +7,7 @@ class MyPlayer {
     this.manager = manager;
   }
 
-  createMyPlayer(guildId: string, voiceChannelId: string, textChannelId: string): Player {
+  createMyPlayer(guildId: string, voiceChannelId: string, textChannelId: string, autoPlay: boolean): Player {
     const get = this.manager.getPlayer(guildId);
 
     if (get) {
@@ -19,7 +19,7 @@ class MyPlayer {
       guildId,
       voiceChannelId,
       textChannelId,
-      autoPlay: true,
+      autoPlay,
     });
 
     console.log("create player");

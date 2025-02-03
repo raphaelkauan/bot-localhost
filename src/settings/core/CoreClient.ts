@@ -63,6 +63,11 @@ export class CoreClient extends Client {
       manager.packetUpdate(d);
     });
 
+    manager.on("trackEnd", (player) => {
+      console.log("auuu");
+      player.stop();
+    });
+
     return manager;
   }
 

@@ -79,7 +79,12 @@ export default new Command({
       }
 
       const myPlayer = new MyPlayer(await manager);
-      const player = myPlayer.createMyPlayer(interaction.guildId!, voiceChannelId, interaction.channelId);
+      const player = myPlayer.createMyPlayer(
+        interaction.guildId!,
+        voiceChannelId,
+        interaction.channelId,
+        false
+      );
 
       if (player.playing) {
         const song = musicState.queue.shift()!;
@@ -128,10 +133,6 @@ export default new Command({
         if (!player.playing && !player.paused) {
           player.play();
         }
-
-        (await manager).on("trackEnd", () => {
-          player.stop();
-        });
 
         await interaction.reply({
           embeds: [

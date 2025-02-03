@@ -7,8 +7,7 @@ import { createEmbedInformation } from "../../utils/functions/createEmbedInforma
 import { colors } from "../../utils/colors/colors.json";
 import { validationUrl } from "../../utils/functions/validationUrl";
 import { manager } from "../..";
-import { Player } from "moonlink.js";
-import { MyPlayer } from "../../utils/functions/lava/createPlayer";
+import MyPlayer from "../../utils/classes/MyPlayer";
 
 dotenv.config();
 
@@ -34,7 +33,6 @@ export default new Command({
   async run({ interaction }) {
     const guildMember = interaction.guild?.members.cache.get(interaction.user.id);
     const voiceChannelId = guildMember?.voice.channelId;
-    const textChannelId = interaction.channelId;
 
     if (!voiceChannelId) {
       await interaction.reply({
@@ -80,10 +78,10 @@ export default new Command({
         musicState.queue.push(url);
       }
 
-      const myPlayer = new MyPlayer();
-      const player = myPlayer.createPlayer(interaction);
+      const myPlayer = new MyPlayer(await manager);
+      const player = myPlayer.createMyPlayer(interaction.guildId!, voiceChannelId, interaction.channelId);
 
-      if ((await player).playing) {
+      if (player.playing) {
         const song = musicState.queue.shift()!;
 
         const res = await (
@@ -99,10 +97,10 @@ export default new Command({
         }
 
         let track = res.tracks[0];
-        (await player).queue.add(track);
+        player.queue.add(track);
       }
 
-      if (!(await player).playing) {
+      if (!player.playing) {
         if (!musicState.connection) {
           musicState.connection = joinVoiceChannel({
             channelId: voiceChannelId,
@@ -126,16 +124,14 @@ export default new Command({
         }
 
         let track = res.tracks[0];
-        (await player).queue.add(track);
-        if (!(await player).playing && !(await player).paused) {
-          (await player).play();
+        player.queue.add(track);
+        if (!player.playing && !player.paused) {
+          player.play();
         }
 
-        // (await manager).on("trackEnd", () => {
-        //   player.then((m) => {
-        //     m.stop();
-        //   });
-        // });
+        (await manager).on("trackEnd", () => {
+          player.stop();
+        });
 
         await interaction.reply({
           embeds: [

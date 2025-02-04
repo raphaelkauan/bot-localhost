@@ -1,7 +1,7 @@
 import { ApplicationCommandOptionType, ApplicationCommandType, formatEmoji } from "discord.js";
 import { Command } from "../../settings/types/Command";
 import dotenv from "dotenv";
-import { AudioPlayer, joinVoiceChannel, VoiceConnection } from "@discordjs/voice";
+import { joinVoiceChannel, VoiceConnection } from "@discordjs/voice";
 import { validationChannel } from "../../utils/functions/validationChannel";
 import { createEmbedInformation } from "../../utils/functions/createEmbedInformation";
 import { colors } from "../../utils/colors/colors.json";
@@ -13,9 +13,6 @@ dotenv.config();
 
 export const musicState = {
   queue: [] as string[],
-  musicTitle: [] as string[],
-  playerAudio: null as AudioPlayer | null,
-  connection: null as VoiceConnection | null,
 };
 
 export default new Command({
@@ -51,11 +48,15 @@ export default new Command({
 
     if (!(await validationChannel(interaction))) return;
 
-    if (
-      voiceChannelId !== interaction.guild?.members.me?.voice.channelId &&
-      musicState &&
-      musicState.playerAudio
-    ) {
+    const myPlayer = new MyPlayer(await manager);
+    const player = myPlayer.createMyPlayer(
+      interaction.guildId!,
+      voiceChannelId,
+      interaction.channelId,
+      false
+    );
+
+    if (voiceChannelId !== interaction.guild?.members.me?.voice.channelId && player.playing) {
       await interaction.reply({
         ephemeral: true,
         embeds: [
@@ -79,14 +80,6 @@ export default new Command({
         musicState.queue.push(url);
       }
 
-      const myPlayer = new MyPlayer(await manager);
-      const player = myPlayer.createMyPlayer(
-        interaction.guildId!,
-        voiceChannelId,
-        interaction.channelId,
-        false
-      );
-
       if (player.playing) {
         const song = musicState.queue.shift()!;
 
@@ -107,8 +100,8 @@ export default new Command({
       }
 
       if (!player.playing) {
-        if (!musicState.connection) {
-          musicState.connection = joinVoiceChannel({
+        if (!player.connect) {
+          joinVoiceChannel({
             channelId: voiceChannelId,
             guildId: interaction.guild!.id,
             adapterCreator: interaction.guild!.voiceAdapterCreator,
@@ -136,13 +129,7 @@ export default new Command({
         }
 
         await interaction.reply({
-          embeds: [
-            createEmbedInformation(
-              colors.blueMusic,
-              "Informação",
-              `**${interaction.user.displayName}** sua música está tocando!`
-            ),
-          ],
+          embeds: [createEmbedInformation(colors.blueMusic, "Informação", `Música sendo reproduzida!`)],
         });
         return;
       }

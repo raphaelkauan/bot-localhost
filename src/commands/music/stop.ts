@@ -4,6 +4,8 @@ import { musicState } from "../music/play";
 import { validationChannel } from "../../utils/functions/validationChannel";
 import { createEmbedInformation } from "../../utils/functions/createEmbedInformation";
 import { colors } from "../../utils/colors/colors.json";
+import { manager } from "../..";
+import MyPlayer from "../../utils/classes/MyPlayer";
 
 export default new Command({
   name: "stop",
@@ -13,13 +15,21 @@ export default new Command({
   async run({ interaction }) {
     if (!(await validationChannel(interaction))) return;
 
-    if (musicState.connection) {
-      musicState.connection.destroy();
-      musicState.connection = null;
+    const guildMember = interaction.guild?.members.cache.get(interaction.user.id);
+    const voiceChannelId = guildMember?.voice.channelId;
 
-      while (musicState.queue.length) {
-        musicState.queue.pop();
-      }
+    const myPlayer = new MyPlayer(await manager);
+    const player = myPlayer.createMyPlayer(
+      interaction.guildId!,
+      voiceChannelId!,
+      interaction.channelId,
+      false
+    );
+
+    if (player.playing) {
+      player.disconnect();
+      player.destroy();
+      player.queue.clear();
     }
 
     interaction.reply({

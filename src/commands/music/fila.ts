@@ -47,12 +47,12 @@ export default new Command({
     for (let i = 0; i < player.queue.tracks.length; i++) {
       let title = player.queue.tracks[i].title;
       console.log(title);
-      songTitles.push(`**#${i + 1} - ${title}\n**`);
+      songTitles.push(`**#${i + 1} - ${title.slice(0, 3)}...\n**`);
     }
 
     const embed = new EmbedBuilder()
       .setColor("#1DB954")
-      .setTitle("🎶 Fila de Músicas")
+      .setTitle("🎶 Fila de Músicas (O título permanece oculto para maior privacidade)")
       .setDescription(
         `${formatEmoji(
           "1328450336888848486",

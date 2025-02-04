@@ -6,6 +6,7 @@ import { createEmbedInformation } from "../../utils/functions/createEmbedInforma
 import { colors } from "../../utils/colors/colors.json";
 import MyPlayer from "../../utils/classes/MyPlayer";
 import { manager } from "../..";
+import { info } from "./play";
 
 dotenv.config();
 
@@ -17,16 +18,8 @@ export default new Command({
   async run({ interaction }) {
     if (!(await validationChannel(interaction))) return;
 
-    const guildMember = interaction.guild?.members.cache.get(interaction.user.id);
-    const voiceChannelId = guildMember?.voice.channelId;
-
     const myPlayer = new MyPlayer(await manager);
-    const player = myPlayer.createMyPlayer(
-      interaction.guildId!,
-      voiceChannelId!,
-      interaction.channelId,
-      false
-    );
+    const player = myPlayer.createMyPlayer(info.guildId, info.voiceChannelId, info.channelId, false);
 
     if (player.queue.size === 0) {
       await interaction.reply({
@@ -46,7 +39,6 @@ export default new Command({
 
     for (let i = 0; i < player.queue.tracks.length; i++) {
       let title = player.queue.tracks[i].title;
-      console.log(title);
       songTitles.push(`**#${i + 1} - ${title.slice(0, 3)}...\n**`);
     }
 

@@ -1,20 +1,22 @@
 import { Manager } from "moonlink.js";
-
 import { Client } from "discord.js";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 export const LavalinkClient = (client: Client) => {
   return new Manager({
     nodes: [
       {
-        identifier: "node_1",
-        host: "127.0.0.1",
-        password: "123321",
-        port: 8080,
+        identifier: process.env.LAVA_IDENTIFIER,
+        host: process.env.LAVA_HOST,
+        password: process.env.LAVA_PASSWORD,
+        port: process.env.LAVA_PORT,
         secure: false,
       },
     ],
     options: {
-      clientId: "1328431241086898216",
+      clientId: process.env.CLIENT_ID,
     },
     sendPayload: (guildId: string, payload: string) => {
       const guild = client.guilds.cache.get(guildId);

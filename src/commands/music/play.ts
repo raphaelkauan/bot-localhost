@@ -11,8 +11,11 @@ import MyPlayer from "../../utils/classes/MyPlayer";
 
 dotenv.config();
 
-export const musicState = {
+export const info = {
   queue: [] as string[],
+  guildId: "" as string,
+  voiceChannelId: "" as string,
+  channelId: "" as string,
 };
 
 export default new Command({
@@ -30,9 +33,11 @@ export default new Command({
 
   async run({ interaction }) {
     const guildMember = interaction.guild?.members.cache.get(interaction.user.id);
-    const voiceChannelId = guildMember?.voice.channelId;
+    info.guildId = interaction.guildId!;
+    info.voiceChannelId = guildMember?.voice.channelId!;
+    info.channelId = interaction.channelId;
 
-    if (!voiceChannelId) {
+    if (!info.voiceChannelId) {
       await interaction.reply({
         ephemeral: true,
         embeds: [
@@ -49,14 +54,9 @@ export default new Command({
     if (!(await validationChannel(interaction))) return;
 
     const myPlayer = new MyPlayer(await manager);
-    const player = myPlayer.createMyPlayer(
-      interaction.guildId!,
-      voiceChannelId,
-      interaction.channelId,
-      false
-    );
+    const player = myPlayer.createMyPlayer(info.guildId, info.voiceChannelId, info.channelId, false);
 
-    if (voiceChannelId !== interaction.guild?.members.me?.voice.channelId && player.playing) {
+    if (info.voiceChannelId !== interaction.guild?.members.me?.voice.channelId && player.playing) {
       await interaction.reply({
         ephemeral: true,
         embeds: [
@@ -77,11 +77,11 @@ export default new Command({
 
     try {
       if (typeof url === "string") {
-        musicState.queue.push(url);
+        info.queue.push(url);
       }
 
       if (player.playing) {
-        const song = musicState.queue.shift()!;
+        const song = info.queue.shift()!;
 
         const res = await (
           await manager
@@ -102,13 +102,13 @@ export default new Command({
       if (!player.playing) {
         if (!player.connect) {
           joinVoiceChannel({
-            channelId: voiceChannelId,
+            channelId: info.voiceChannelId,
             guildId: interaction.guild!.id,
             adapterCreator: interaction.guild!.voiceAdapterCreator,
           });
         }
 
-        const song = musicState.queue.shift()!;
+        const song = info.queue.shift()!;
 
         const res = await (
           await manager

@@ -11,7 +11,6 @@ class MyPlayer {
     const get = this.manager.getPlayer(guildId);
 
     if (get) {
-      console.log("get player");
       return get;
     }
 
@@ -22,7 +21,6 @@ class MyPlayer {
       autoPlay,
     });
 
-    console.log("create player");
     return create;
   }
 }

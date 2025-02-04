@@ -1,4 +1,4 @@
-## <img width="124" src="https://static.wikia.nocookie.net/logopedia/images/0/05/Discord.svg/revision/latest?cb=20180110223813" alt="Discord" title="Discord"/>
+## <img width="150" src="https://static.wikia.nocookie.net/logopedia/images/0/05/Discord.svg/revision/latest?cb=20180110223813" alt="Discord" title="Discord"/>
 
 Bot ativo no seguinte servidor: [127.0.01](https://discord.gg/wM5kHQrr)
 
@@ -37,7 +37,6 @@ Além de enviar uma mensagem de boas-vindas sempre que um novo membro entra no s
 - [ ] Suporte a playlists do red. 🎶
 - [ ] Adicionar integração com o green. 🎶
 - [ ] Implatementação de comando para voltar música.
-- [ ] Implementar comandos para controle de volume.
 - [x] Retomar música com `/unpause`
 - [x] Pausar música com `/pause`
 - [x] Parar música e desconectar com `/stop`

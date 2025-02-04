@@ -64,7 +64,6 @@ export class CoreClient extends Client {
     });
 
     manager.on("trackEnd", (player) => {
-      console.log("auuu");
       player.stop();
     });
 

@@ -1,11 +1,11 @@
 import { ApplicationCommandType } from "discord.js";
 import { Command } from "../../settings/types/Command";
-import { musicState } from "../music/play";
 import { validationChannel } from "../../utils/functions/validationChannel";
 import { createEmbedInformation } from "../../utils/functions/createEmbedInformation";
 import { colors } from "../../utils/colors/colors.json";
 import { manager } from "../..";
 import MyPlayer from "../../utils/classes/MyPlayer";
+import { info } from "./play";
 
 export default new Command({
   name: "stop",
@@ -15,16 +15,8 @@ export default new Command({
   async run({ interaction }) {
     if (!(await validationChannel(interaction))) return;
 
-    const guildMember = interaction.guild?.members.cache.get(interaction.user.id);
-    const voiceChannelId = guildMember?.voice.channelId;
-
     const myPlayer = new MyPlayer(await manager);
-    const player = myPlayer.createMyPlayer(
-      interaction.guildId!,
-      voiceChannelId!,
-      interaction.channelId,
-      false
-    );
+    const player = myPlayer.createMyPlayer(info.guildId, info.voiceChannelId, info.channelId, false);
 
     if (player.playing) {
       player.disconnect();

@@ -8,10 +8,10 @@ export const LavalinkClient = (client: Client) => {
   return new Manager({
     nodes: [
       {
-        identifier: process.env.LAVA_IDENTIFIER,
-        host: process.env.LAVA_HOST,
-        password: process.env.LAVA_PASSWORD,
-        port: process.env.LAVA_PORT,
+        identifier: process.env.LAVA_IDENTIFIER!,
+        host: process.env.LAVA_HOST!,
+        password: process.env.LAVA_PASSWORD!,
+        port: Number(process.env.LAVA_PORT),
         secure: false,
       },
     ],

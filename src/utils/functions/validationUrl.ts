@@ -1,10 +1,9 @@
-import ytdl from "@distube/ytdl-core";
-import { CommandInteraction, Interaction } from "discord.js";
+import { CommandInteraction } from "discord.js";
 import { createEmbedInformation } from "./createEmbedInformation";
 import { colors } from "../../utils/colors/colors.json";
 
 export async function validationUrl(url: string, interaction: CommandInteraction) {
-  if (!ytdl.validateURL(url)) {
+  if (!url.includes("https://www.youtube.com/")) {
     await interaction.reply({
       ephemeral: true,
       embeds: [

@@ -75,6 +75,9 @@ export default new Command({
     // @ts-ignore
     if (!(await validationUrl(url, interaction))) return;
 
+    // @ts-ignore
+    const isPlaylist = url.includes("playlist") || url.includes("&list=");
+
     try {
       if (typeof url === "string") {
         info.queue.push(url);
@@ -92,6 +95,40 @@ export default new Command({
         });
 
         if (res.loadType === "loadfailed") {
+          await interaction.reply({
+            ephemeral: true,
+            embeds: [createEmbedInformation(colors.yellow, "Informação", `Você inseriu um link inválido`)],
+          });
+          return;
+        }
+
+        if (isPlaylist) {
+          for (const track of res.tracks) {
+            if (player.queue.size >= 25) {
+              await interaction.reply({
+                ephemeral: true,
+                embeds: [
+                  createEmbedInformation(
+                    colors.yellow,
+                    "Informação",
+                    "Algumas músicas foram adicionadas, mas a fila atingiu o limite de 25! Use `/skip` para liberar espaço ou `/fila` para visualizar a fila."
+                  ),
+                ],
+              });
+              if (!player.playing && !player.paused) {
+                player.play();
+              }
+              return;
+            }
+            player.queue.add(track);
+          }
+
+          if (!player.playing && !player.paused) {
+            player.play();
+          }
+          await interaction.reply({
+            embeds: [createEmbedInformation(colors.blueMusic, "Informação", `Músicas adicionadas na fila!`)],
+          });
           return;
         }
 
@@ -118,7 +155,41 @@ export default new Command({
           requester: interaction.user,
         });
 
-        if (res.loadType === "loadfailed") {
+        if (res.loadType === "loadfailed" || res.error) {
+          await interaction.reply({
+            ephemeral: true,
+            embeds: [createEmbedInformation(colors.yellow, "Informação", `Você inseriu um link inválido`)],
+          });
+          return;
+        }
+
+        if (isPlaylist) {
+          for (const track of res.tracks) {
+            if (player.queue.size >= 25) {
+              await interaction.reply({
+                ephemeral: true,
+                embeds: [
+                  createEmbedInformation(
+                    colors.yellow,
+                    "Informação",
+                    "Algumas músicas foram adicionadas, mas a fila atingiu o limite de 25! Use `/skip` para liberar espaço ou `/fila` para visualizar ela."
+                  ),
+                ],
+              });
+              if (!player.playing && !player.paused) {
+                player.play();
+              }
+              return;
+            }
+            player.queue.add(track);
+          }
+
+          if (!player.playing && !player.paused) {
+            player.play();
+          }
+          await interaction.reply({
+            embeds: [createEmbedInformation(colors.blueMusic, "Informação", `Músicas adicionadas na fila!`)],
+          });
           return;
         }
 

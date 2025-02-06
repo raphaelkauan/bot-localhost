@@ -34,9 +34,9 @@ Além de enviar uma mensagem de boas-vindas sempre que um novo membro entra no s
 ### Implementações
 
 - [ ] Melhorar o visual do embed enviado após a entrada de um novo membro no servidor.
-- [ ] Suporte a playlists do red. 🎶
 - [ ] Adicionar integração com o green. 🎶
 - [ ] Implatementação de comando para voltar música.
+- [x] Suporte a playlists do red. 🎶
 - [x] Retomar música com `/unpause`
 - [x] Pausar música com `/pause`
 - [x] Parar música e desconectar com `/stop`

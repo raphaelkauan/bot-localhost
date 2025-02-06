@@ -8,6 +8,7 @@ import { colors } from "../../utils/colors/colors.json";
 import { validationUrl } from "../../utils/functions/validationUrl";
 import { manager } from "../..";
 import MyPlayer from "../../utils/classes/MyPlayer";
+import { supportPlaylist } from "../../utils/functions/supportPlaylist";
 
 dotenv.config();
 
@@ -103,32 +104,7 @@ export default new Command({
         }
 
         if (isPlaylist) {
-          for (const track of res.tracks) {
-            if (player.queue.size >= 25) {
-              await interaction.reply({
-                ephemeral: true,
-                embeds: [
-                  createEmbedInformation(
-                    colors.yellow,
-                    "Informação",
-                    "Algumas músicas foram adicionadas, mas a fila atingiu o limite de 25! Use `/skip` para liberar espaço ou `/fila` para visualizar a fila."
-                  ),
-                ],
-              });
-              if (!player.playing && !player.paused) {
-                player.play();
-              }
-              return;
-            }
-            player.queue.add(track);
-          }
-
-          if (!player.playing && !player.paused) {
-            player.play();
-          }
-          await interaction.reply({
-            embeds: [createEmbedInformation(colors.blueMusic, "Informação", `Músicas adicionadas na fila!`)],
-          });
+          await supportPlaylist(interaction, res);
           return;
         }
 
@@ -164,32 +140,7 @@ export default new Command({
         }
 
         if (isPlaylist) {
-          for (const track of res.tracks) {
-            if (player.queue.size >= 25) {
-              await interaction.reply({
-                ephemeral: true,
-                embeds: [
-                  createEmbedInformation(
-                    colors.yellow,
-                    "Informação",
-                    "Algumas músicas foram adicionadas, mas a fila atingiu o limite de 25! Use `/skip` para liberar espaço ou `/fila` para visualizar ela."
-                  ),
-                ],
-              });
-              if (!player.playing && !player.paused) {
-                player.play();
-              }
-              return;
-            }
-            player.queue.add(track);
-          }
-
-          if (!player.playing && !player.paused) {
-            player.play();
-          }
-          await interaction.reply({
-            embeds: [createEmbedInformation(colors.blueMusic, "Informação", `Músicas adicionadas na fila!`)],
-          });
+          await supportPlaylist(interaction, res);
           return;
         }
 

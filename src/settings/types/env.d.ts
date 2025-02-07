@@ -9,5 +9,6 @@ declare namespace NodeJS {
     LAVA_HOST: string;
     LAVA_PASSWORD: string;
     LAVA_PORT: number;
+    LAVA_SECURE: boolean;
   }
 }

@@ -77,7 +77,7 @@ export default new Command({
     if (!(await validationUrl(url, interaction))) return;
 
     // @ts-ignore
-    const isPlaylist = url.includes("playlist") || url.includes("&list=");
+    const isPlaylist = url.includes("playlist");
 
     try {
       if (typeof url === "string") {

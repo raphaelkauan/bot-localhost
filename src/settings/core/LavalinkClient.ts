@@ -12,7 +12,7 @@ export const LavalinkClient = (client: Client) => {
         host: process.env.LAVA_HOST!,
         password: process.env.LAVA_PASSWORD!,
         port: Number(process.env.LAVA_PORT),
-        secure: false,
+        secure: Boolean(process.env.LAVA_SECURE),
       },
     ],
     options: {

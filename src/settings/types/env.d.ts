@@ -10,5 +10,7 @@ declare namespace NodeJS {
     LAVA_PASSWORD: string;
     LAVA_PORT: number;
     LAVA_SECURE: boolean;
+    CHANNEL_REGRAS: string;
+    CHANNEL_CONTEUDO: string;
   }
 }

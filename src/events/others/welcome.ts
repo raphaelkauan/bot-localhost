@@ -28,11 +28,11 @@ export default new Event({
       .addFields(
         {
           name: "📜 Regras",
-          value: "Não deixe de conferir o canal de <#1326738060666470535> para não ter nenhum problema!",
+          value: `Não deixe de conferir o canal de <#${process.env.CHANNEL_REGRAS}> para não ter nenhum problema!`,
         },
         {
           name: "📚 Conteúdo",
-          value: "Confira o canal de <#1326738060666470535> para dicas, tutoriais e materiais úteis!",
+          value: `Confira o canal de <#${process.env.CHANNEL_CONTEUDO}> para dicas, tutoriais e materiais úteis!`,
         },
         {
           name: "💬 Canais",

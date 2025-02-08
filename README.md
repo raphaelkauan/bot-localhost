@@ -9,7 +9,7 @@ Além de enviar uma mensagem de boas-vindas sempre que um novo membro entra no s
 ### 🎶 Comandos de Música
 
 - **`/play <link>`**
-  - Reproduz uma música no canal de voz a partir de um link do YouTube. Se já houver uma música tocando, adiciona a nova música à fila.
+  - Reproduz uma música no canal de voz a partir de um link do YouTube. *O título da música permanece oculto para maior privacidade*. Se já houver uma música tocando, a nova será adicionada à fila.
 - **`/pause`**
 
   - Pausa a música que está sendo reproduzida no momento.

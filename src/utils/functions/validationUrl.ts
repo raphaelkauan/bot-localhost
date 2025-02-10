@@ -3,7 +3,7 @@ import { createEmbedInformation } from "./createEmbedInformation";
 import { colors } from "../../utils/colors/colors.json";
 
 export async function validationUrl(url: string, interaction: CommandInteraction) {
-  if (!url.includes("https://www.youtube.com/")) {
+  if (!url.includes("www.youtube.com")) {
     await interaction.reply({
       ephemeral: true,
       embeds: [

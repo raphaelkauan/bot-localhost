@@ -71,13 +71,19 @@ export default new Command({
       return;
     }
 
-    const url = interaction.options.get("link", true).value;
+    let url = interaction.options.get("link", true).value;
 
-    // @ts-ignore
-    if (!(await validationUrl(url, interaction))) return;
+    let isPlaylist;
+    if (typeof url === "string") {
+      if (!(await validationUrl(url, interaction))) return;
 
-    // @ts-ignore
-    const isPlaylist = url.includes("playlist");
+      isPlaylist = url.includes("playlist");
+
+      if (url.includes("list")) {
+        const newUrl = url.split("&list=")[0];
+        url = newUrl;
+      }
+    }
 
     try {
       if (typeof url === "string") {

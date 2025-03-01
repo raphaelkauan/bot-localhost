@@ -51,7 +51,7 @@ export default new Command({
           true
         )} Música(s) que estão na fila no momento:\n\n ${songTitles.join("\n")}`
       )
-      //   .setFields({ name: "\n", value: "💡 Dica: Digite '/skip' para pular de música" })
+      .setFields({ name: "\n", value: "*Dica: Digite '/skip' para pular de música*" })
       .setFooter({
         text: `Total: ${player.queue.size} música(s)`,
         iconURL: interaction.user.displayAvatarURL(),

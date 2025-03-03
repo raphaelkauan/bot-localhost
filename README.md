@@ -1,4 +1,4 @@
-## <img width="150" src="https://static.wikia.nocookie.net/logopedia/images/0/05/Discord.svg/revision/latest?cb=20180110223813" alt="Discord" title="Discord"/>
+# 🎃 Bot Discord
 
 Bot ativo no seguinte servidor: [127.0.01](https://discord.gg/wM5kHQrr)
 

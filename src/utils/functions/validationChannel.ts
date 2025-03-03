@@ -5,7 +5,7 @@ import { colors } from "../../utils/colors/colors.json";
 
 dotenv.config();
 
-export async function validationChannel(interaction: CommandInteraction) {
+export async function validationChannel(interaction: CommandInteraction): Promise<boolean> {
   const channelId = process.env.CHANNEL_MUSIC_ID;
 
   if (interaction.channelId != channelId) {

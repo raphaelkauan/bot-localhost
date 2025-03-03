@@ -6,3 +6,4 @@ cookie.json
 /lavalink/plugins
 /lavalink/application.yml
 /lavalink/Lavalink.jar
+/src/database

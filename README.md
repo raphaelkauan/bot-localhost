@@ -33,6 +33,7 @@ Além de enviar uma mensagem de boas-vindas sempre que um novo membro entra no s
 
 ### Implementações
 
+- [ ] Implamentar sistema para monitorar atividade do servidor
 - [ ] Melhorar o visual do embed enviado após a entrada de um novo membro no servidor.
 - [ ] Adicionar integração com o green. 🎶
 - [ ] Implatementação de comando para voltar música.

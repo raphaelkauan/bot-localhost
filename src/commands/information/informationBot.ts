@@ -1,7 +1,7 @@
 import { ApplicationCommandType, ColorResolvable, EmbedBuilder, formatEmoji } from "discord.js";
 import { Command } from "../../settings/types/Command";
-import { colors } from "../../utils/colors/colors.json";
-import { validationSuperUser } from "../../utils/functions/admin/validationSuperUser";
+import { colors } from "../../manager/styles/colors.json";
+import { validationSuperUser } from "../../manager/function/validation/validationSuperUser";
 
 export default new Command({
   name: "apresentacao-bot",

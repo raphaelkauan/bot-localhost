@@ -1,6 +1,6 @@
 import { Event } from "../../settings/types/Event";
 import { info } from "../../commands/music/play";
-import MyPlayer from "../../utils/classes/MyPlayer";
+import MyPlayer from "../../manager/classes/MyPlayer";
 import { manager } from "../..";
 
 export default new Event({

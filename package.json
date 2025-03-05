@@ -18,10 +18,12 @@
   "dependencies": {
     "@discordjs/voice": "^0.18.0",
     "@distube/ytdl-core": "^4.15.8",
+    "@prisma/client": "^6.4.1",
     "discord.js": "^14.16.3",
     "dotenv": "^16.4.5",
     "ffmpeg-static": "^5.2.0",
     "moonlink.js": "^4.4.7",
+    "prisma": "^6.4.1",
     "ts-lib": "^0.0.5"
   }
 }

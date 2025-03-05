@@ -1,9 +1,9 @@
 import { CommandInteraction } from "discord.js";
-import { manager } from "../..";
-import MyPlayer from "../classes/MyPlayer";
-import { info } from "../../commands/music/play";
-import { createEmbedInformation } from "./createEmbedInformation";
-import { colors } from "../../utils/colors/colors.json";
+import { manager } from "../../..";
+import MyPlayer from "../../classes/MyPlayer";
+import { info } from "../../../commands/music/play";
+import { createEmbedInformation } from "../components/createEmbedInformation";
+import { colors } from "../../styles/colors.json";
 import { SearchResult } from "moonlink.js";
 
 export async function supportPlaylist(interaction: CommandInteraction, res: SearchResult) {

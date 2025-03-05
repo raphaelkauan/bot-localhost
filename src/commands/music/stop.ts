@@ -1,10 +1,10 @@
 import { ApplicationCommandType } from "discord.js";
 import { Command } from "../../settings/types/Command";
-import { validationChannel } from "../../utils/functions/validationChannel";
-import { createEmbedInformation } from "../../utils/functions/createEmbedInformation";
-import { colors } from "../../utils/colors/colors.json";
+import { validationChannel } from "../../manager/function/validation/validationChannel";
+import { createEmbedInformation } from "../../manager/function/components/createEmbedInformation";
+import { colors } from "../../manager/styles/colors.json";
 import { manager } from "../..";
-import MyPlayer from "../../utils/classes/MyPlayer";
+import MyPlayer from "../../manager/classes/MyPlayer";
 import { info } from "./play";
 
 export default new Command({

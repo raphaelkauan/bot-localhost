@@ -2,13 +2,13 @@ import { ApplicationCommandOptionType, ApplicationCommandType, formatEmoji } fro
 import { Command } from "../../settings/types/Command";
 import dotenv from "dotenv";
 import { joinVoiceChannel, VoiceConnection } from "@discordjs/voice";
-import { validationChannel } from "../../utils/functions/validationChannel";
-import { createEmbedInformation } from "../../utils/functions/createEmbedInformation";
-import { colors } from "../../utils/colors/colors.json";
-import { validationUrl } from "../../utils/functions/validationUrl";
+import { validationChannel } from "../../manager/function/validation/validationChannel";
+import { createEmbedInformation } from "../../manager/function/components/createEmbedInformation";
+import { colors } from "../../manager/styles/colors.json";
+import { validationUrl } from "../../manager/function/validation/validationUrl";
 import { manager } from "../..";
-import MyPlayer from "../../utils/classes/MyPlayer";
-import { supportPlaylist } from "../../utils/functions/supportPlaylist";
+import MyPlayer from "../../manager/classes/MyPlayer";
+import { supportPlaylist } from "../../manager/function/support/supportPlaylist";
 
 dotenv.config();
 

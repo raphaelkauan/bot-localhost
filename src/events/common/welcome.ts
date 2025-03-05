@@ -9,7 +9,8 @@ export default new Event({
   async run(interaction) {
     const channelWelcomeId = process.env.CHANNEL_WELCOME_ID;
 
-    // @ts-ignore
+    if (!channelWelcomeId) return;
+
     let channel = interaction.guild.channels.cache.get(channelWelcomeId) as TextChannel;
 
     if (!channel) {

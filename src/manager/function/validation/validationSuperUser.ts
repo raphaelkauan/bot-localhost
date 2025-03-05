@@ -1,7 +1,7 @@
 import { CommandInteraction } from "discord.js";
 import dotenv from "dotenv";
-import { colors } from "../../../utils/colors/colors.json";
-import { createEmbedInformation } from "../createEmbedInformation";
+import { colors } from "../../styles/colors.json";
+import { createEmbedInformation } from "../components/createEmbedInformation";
 
 dotenv.config();
 

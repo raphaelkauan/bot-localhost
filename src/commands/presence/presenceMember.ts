@@ -1,7 +1,6 @@
 import { ApplicationCommandType } from "discord.js";
 import { Command } from "../../settings/types/Command";
 import { Prisma } from "../../database/client";
-import { formatDate } from "../../manager/function/util/formatDate";
 
 export default new Command({
   name: "presence",
@@ -26,8 +25,6 @@ export default new Command({
         (findMemberById?.status === "ativo" && member.presence?.status === undefined) ||
         member.presence?.status === "offline"
       ) {
-        console.log("Atualiza em caso de o membro estar cadastrado como ativo e fique offline");
-
         if (!findMemberById) return;
 
         await Prisma.member.update({
@@ -44,8 +41,6 @@ export default new Command({
       /**
        * Se o membro estiver "ativo" e não estiver cadastrado no banco ele é cadastrado
        */
-
-      console.log(member.user.username + member.presence?.status);
       if (
         (member.presence?.status === "online" && !findMemberById) ||
         (member.presence?.status === "idle" && !findMemberById) ||

@@ -11,6 +11,5 @@ export async function validationUrl(url: string, interaction: CommandInteraction
     });
     return false;
   }
-
   return true;
 }

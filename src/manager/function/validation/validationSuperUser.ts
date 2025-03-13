@@ -1,4 +1,4 @@
-import { CommandInteraction } from "discord.js";
+import { CommandInteraction, MessageFlags } from "discord.js";
 import dotenv from "dotenv";
 import { colors } from "../../styles/colors.json";
 import { createEmbedInformation } from "../components/createEmbedInformation";
@@ -10,13 +10,12 @@ export async function validationSuperUser(interaction: CommandInteraction) {
 
   if (interaction.user.id !== superUserId) {
     await interaction.reply({
-      ephemeral: true,
       embeds: [
         createEmbedInformation(colors.red, "Atenção", "Você não tem permissão para executar este comando!"),
       ],
+      flags: MessageFlags.Ephemeral,
     });
     return false;
   }
-
   return true;
 }

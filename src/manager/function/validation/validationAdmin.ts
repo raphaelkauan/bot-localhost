@@ -7,7 +7,7 @@ export function validationAdmin(interaction: CommandInteraction) {
   const cargoAdmId = process.env.CARGO_ADMIN_ID;
 
   if (interaction.member instanceof GuildMember) {
-    if (!interaction.member?.roles.cache.has(cargoAdmId)) {
+    if (!interaction.member?.roles.cache.has(cargoAdmId!)) {
       interaction.reply({
         content: `<@${interaction.user.id}> você não tem permissão para executar esse comando!`,
         flags: MessageFlags.Ephemeral,
